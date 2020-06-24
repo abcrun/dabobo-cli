@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
-    "standard", "plugin:json/recommended",
+    "standard",
+    "plugin:json/recommended",
     "plugin:prettier/recommended",
   ],
   rules: {
