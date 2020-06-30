@@ -1,5 +1,5 @@
 {
-  "name": "cousin",
+  "name": "cousin-cli",
   "version": "0.0.1",
   "description": "前端工程化构建工具",
   "bin": {
@@ -38,5 +38,8 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5"
+  },
+  "dependencies": {
+    "inquirer": "^7.2.0"
   }
 }
