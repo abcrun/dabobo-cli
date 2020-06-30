@@ -45,8 +45,63 @@ const questions = [
   },
 ];
 
+const getPkg = (params) => {
+  const devDeps = [
+    'eslint',
+    'prettier',
+    'eslint-config-prettier',
+    'eslint-plugin-prettier',
+    'husky',
+    'lint-stated',
+  ];
+  const { style, frame, commitlint, name } = params;
+  const config = { name };
+
+  if (style === 1) {
+    devDeps.push(
+      'eslint-config-standard',
+      'eslint-plugin-standard',
+      'eslint-plugin-promise',
+      'eslint-plugin-import',
+      'eslint-plugin-node'
+    );
+  } else if (style === 2) {
+    devDeps.push(
+      'eslint-config-airbnb',
+      'eslint-plugin-jsx-ally',
+      'eslint-plugin-import',
+      'eslint-plugin-react',
+      'eslint-plugin-hooks'
+    );
+  }
+
+  if (frame === 1 && style !== 2) {
+    devDeps.push(
+      'eslint-plugin-jsx-ally',
+      'eslint-plugin-import',
+      'eslint-plugin-react',
+      'eslint-plugin-hooks'
+    );
+    config.dependencies = {
+      react: '@latest',
+    };
+  }
+
+  if (commitlint) {
+    devDeps.push('@commitlint/cli', '@commitlint/config-conventional');
+  }
+
+  const devDependencies = {};
+  devDeps.forEach((dep) => {
+    devDependencies[dep] = '@latest';
+  });
+  config.devDependencies = devDependencies;
+
+  return config;
+};
+
 module.exports = () => {
   inquirer.prompt(questions).then((answers) => {
-    console.log(answers);
+    console.log(getPkg(answers));
   });
 };
