@@ -6,7 +6,8 @@
     "cousin": "bin/cousin"
   },
   "scripts": {
-    "lint": "eslint . --fix --ext .js,.json"
+    "lint": "eslint . --fix --ext .js,.json",
+    "prettier": "prettier --write"
   },
   "author": "hrdesign@163.com",
   "license": "MIT",

@@ -6,6 +6,5 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    quotes: [2, 'single'],
   },
 };
