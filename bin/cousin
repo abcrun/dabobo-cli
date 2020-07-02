@@ -15,6 +15,6 @@ program.option('-i, --init', 'initial a project', () => {
 
 program.parse(process.argv);
 
-// if (!program.args.length) {
-//   program.help();
-// }
+if (program.rawArgs.length === 2) {
+  program.help();
+}
