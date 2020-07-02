@@ -1,6 +1,7 @@
-const inquirer = require('inquirer');
 const fs = require('fs');
 const { resolve } = require('path');
+
+const inquirer = require('inquirer');
 const dirs = resolve('./').split('/');
 const projectName = dirs[dirs.length - 1];
 
@@ -172,8 +173,24 @@ const getLint = (params) => {
 module.exports = () => {
   inquirer.prompt(questions).then((answers) => {
     const pkg = getPkg(answers);
-    fs.writeFile(resolve('./', 'package1.json'), JSON.stringify(pkg), () => {});
+    const lint = getLint(answers);
 
-    console.log(getLint(answers));
+    fs.writeFile(
+      resolve('./', 'package1.json'),
+      JSON.stringify(pkg, '', '\t'),
+      function (err) {
+        if (err) console.error(JSON.stringify(err));
+        else console.info('"package.json" was created');
+      }
+    );
+
+    fs.writeFile(
+      resolve('./', '.eslintrc1.js'),
+      JSON.stringify(lint, '', '\t'),
+      function (err) {
+        if (err) console.error(JSON.stringify(err));
+        else console.info('".eslintrc.js" was created');
+      }
+    );
   });
 };
