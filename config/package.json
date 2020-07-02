@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint . --fix --ext .js,.json",
+    "prettier": "prettier --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  }
+}
