@@ -170,27 +170,49 @@ const getLint = (params) => {
   return config;
 };
 
+const files = [
+  '.eslintignore',
+  '.gitignore',
+  '.prettierignore',
+  '.prettierrc',
+  'gitlab-ci.yml',
+];
+
 module.exports = () => {
   inquirer.prompt(questions).then((answers) => {
+    const { commitlint } = answers;
     const pkg = getPkg(answers);
     const lint = getLint(answers);
 
+    if (commitlint) files.push('commitlint.config.js');
+
     fs.writeFile(
-      resolve('./', 'package1.json'),
+      resolve('./', 'package.json'),
       JSON.stringify(pkg, '', '\t'),
-      function (err) {
+      (err) => {
         if (err) console.error(JSON.stringify(err));
-        else console.info('"package.json" was created');
+        else console.info('    create package.json');
       }
     );
 
     fs.writeFile(
-      resolve('./', '.eslintrc1.js'),
+      resolve('./', '.eslintrc.js'),
       JSON.stringify(lint, '', '\t'),
-      function (err) {
+      (err) => {
         if (err) console.error(JSON.stringify(err));
-        else console.info('".eslintrc.js" was created');
+        else console.info('    create .eslintrc.js');
       }
     );
+
+    files.forEach((f) => {
+      fs.copyFile(
+        resolve(__dirname, '../config/' + f),
+        resolve('./', f),
+        (err) => {
+          if (err) console.error(JSON.stringify(err));
+          else console.info('    create ' + f);
+        }
+      );
+    });
   });
 };
