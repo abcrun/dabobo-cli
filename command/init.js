@@ -75,15 +75,15 @@ const getPkg = (params) => {
       'eslint-plugin-node': '^11.1.0',
     };
   } else if (style === 2) {
-    if (code === 1) devDeps.push('eslint-config-airbnb-typescript');
-    else devDeps.push('eslint-config-airbnb');
+    if (code === 1) devDeps['eslint-config-airbnb-typescript'] = '^8.0.2';
+    else devDeps['eslint-config-airbnb'] = '^18.2.0';
 
     devDeps = {
       ...devDeps,
-      'eslint-plugin-jsx-ally': '^6.3.0',
+      'eslint-plugin-jsx-a11y': '^6.3.0',
       'eslint-plugin-import': '^2.21.2',
       'eslint-plugin-react': '^7.20.0',
-      'eslint-plugin-hooks': '^4',
+      'eslint-plugin-react-hooks': '^4',
     };
   }
 
@@ -96,10 +96,10 @@ const getPkg = (params) => {
     if (style !== 2) {
       devDeps = {
         ...devDeps,
-        'eslint-plugin-jsx-ally': '^6.3.0',
+        'eslint-plugin-jsx-a11y': '^6.3.0',
         'eslint-plugin-import': '^2.21.2',
         'eslint-plugin-react': '^7.20.0',
-        'eslint-plugin-hooks': '^4',
+        'eslint-plugin-react-hooks': '^4',
       };
     }
   }
@@ -130,6 +130,7 @@ const getPkg = (params) => {
 const getLint = (params) => {
   const { style, code, frame } = params;
   const config = {
+    root: true,
     env: {
       es6: true,
       browser: true,
@@ -162,8 +163,14 @@ const getLint = (params) => {
 
   if (code) config.parser = '@typescript-eslint/parser';
 
-  if (frame === 1) {
-    extended.unshift('plugin:react/recommended');
+  if (frame === 1 && style !== 2) {
+    extended.unshift(
+      'plugin:react/recommended',
+      'plugin:react-hooks/recommended',
+      'plugin:jsx-a11y/recommended',
+      'plugin:import/errors',
+      'plugin:import/warnings'
+    );
   }
 
   if (frame === 1 || style === 2) {
