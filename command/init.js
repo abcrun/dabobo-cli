@@ -52,71 +52,77 @@ const questions = [
 ];
 
 const getPkg = (params) => {
-  const devDeps = [
-    'eslint',
-    'prettier',
-    'eslint-config-prettier',
-    'eslint-plugin-prettier',
-    'husky',
-    'lint-stated',
-  ];
+  let devDeps = {
+    eslint: '^7.2.0',
+    prettier: '2.0.5',
+    'eslint-config-prettier': '^6.11.0',
+    'eslint-plugin-prettier': '^3.1.4',
+    husky: '^4.2.5',
+    'lint-stated': '^10.2.11',
+  };
   const { style, frame, code, commitlint, name } = params;
 
   const config = require('../config/package.json');
   config.name = name;
 
   if (style === 1) {
-    devDeps.push(
-      'eslint-config-standard',
-      'eslint-plugin-standard',
-      'eslint-plugin-promise',
-      'eslint-plugin-import',
-      'eslint-plugin-node'
-    );
+    devDeps = {
+      ...devDeps,
+      'eslint-config-standard': '^14.1.1',
+      'eslint-plugin-standard': '^4.0.1',
+      'eslint-plugin-promise': '^4.2.1',
+      'eslint-plugin-import': '^2.21.2',
+      'eslint-plugin-node': '^11.1.0',
+    };
   } else if (style === 2) {
     if (code === 1) devDeps.push('eslint-config-airbnb-typescript');
     else devDeps.push('eslint-config-airbnb');
 
-    devDeps.push(
-      'eslint-plugin-jsx-ally',
-      'eslint-plugin-import',
-      'eslint-plugin-react',
-      'eslint-plugin-hooks'
-    );
+    devDeps = {
+      ...devDeps,
+      'eslint-plugin-jsx-ally': '^6.3.0',
+      'eslint-plugin-import': '^2.21.2',
+      'eslint-plugin-react': '^7.20.0',
+      'eslint-plugin-hooks': '^4',
+    };
   }
 
   if (frame === 1) {
     config.dependencies = {
-      react: '@latest',
+      react: '^16',
+      'react-dom': '^16',
     };
 
-    style !== 2 &&
-      devDeps.push(
-        'eslint-plugin-jsx-ally',
-        'eslint-plugin-import',
-        'eslint-plugin-react',
-        'eslint-plugin-hooks'
-      );
+    if (style !== 2) {
+      devDeps = {
+        ...devDeps,
+        'eslint-plugin-jsx-ally': '^6.3.0',
+        'eslint-plugin-import': '^2.21.2',
+        'eslint-plugin-react': '^7.20.0',
+        'eslint-plugin-hooks': '^4',
+      };
+    }
   }
 
   if (code === 1) {
-    devDeps.push(
-      '@typescript-eslint/parser',
-      '@typescript-eslint/eslint-plugin'
-    );
+    devDeps = {
+      ...devDeps,
+      '@typescript-eslint/parser': '^3.5.0',
+      '@typescript-eslint/eslint-plugin': '^3.5.0',
+    };
   }
 
   if (commitlint) {
-    devDeps.push('@commitlint/cli', '@commitlint/config-conventional');
+    devDeps = {
+      ...devDeps,
+      '@commitlint/cli': '^9.0.1',
+      '@commitlint/config-conventional': '^9.0.1',
+    };
   } else {
     delete config.husky.hooks['commit-msg'];
   }
 
-  const devDependencies = {};
-  devDeps.forEach((dep) => {
-    devDependencies[dep] = '@latest';
-  });
-  config.devDependencies = devDependencies;
+  config.devDependencies = devDeps;
 
   return config;
 };
