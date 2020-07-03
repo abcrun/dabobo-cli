@@ -58,7 +58,7 @@ const getPkg = (params) => {
     'eslint-config-prettier': '^6.11.0',
     'eslint-plugin-prettier': '^3.1.4',
     husky: '^4.2.5',
-    'lint-stated': '^10.2.11',
+    'lint-staged': '^10.2.11',
   };
   const { style, frame, code, commitlint, name } = params;
 
@@ -136,11 +136,14 @@ const getLint = (params) => {
       browser: true,
       node: true,
     },
+    rules: {
+      'prettier/prettier': 'warn',
+    },
   };
   const extended = [];
   const parserOptions = {
     sourceType: 'module',
-    ecmaVersion: 'es6',
+    ecmaVersion: 6,
     ecmaFeatures: {},
   };
 
@@ -210,7 +213,7 @@ module.exports = () => {
 
     fs.writeFile(
       resolve('./', '.eslintrc.js'),
-      JSON.stringify(lint, '', '\t'),
+      'module.exports = \t' + JSON.stringify(lint, '', '\t'),
       (err) => {
         if (err) console.error(JSON.stringify(err));
         else console.info('    create .eslintrc.js');
