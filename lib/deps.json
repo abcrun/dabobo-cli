@@ -1,0 +1,23 @@
+{
+  "eslint": "^7.2.0",
+  "@commitlint/cli": "^9.0.1",
+  "@commitlint/config-conventional": "^9.0.1",
+  "husky": "^4.2.5",
+  "lint-staged": "^10.2.11",
+  "prettier": "2.0.5",
+  "eslint-config-prettier": "^6.11.0",
+  "eslint-plugin-prettier": "^3.1.4",
+  "eslint-config-standard": "^14.1.1",
+  "eslint-config-standard-with-typescript": "^18.0.2",
+  "eslint-plugin-standard": "^4.0.1",
+  "eslint-plugin-promise": "^4.2.1",
+  "eslint-plugin-import": "^2.21.2",
+  "eslint-plugin-node": "^11.1.0",
+  "eslint-config-airbnb-typescript": "^8.0.2",
+  "eslint-config-airbnb": "^18.2.0",
+  "eslint-plugin-jsx-a11y": "^6.3.0",
+  "eslint-plugin-react": "^7.20.0",
+  "eslint-plugin-react-hooks": "^4",
+  "react": "^16",
+  "react-dom": "^16"
+}
