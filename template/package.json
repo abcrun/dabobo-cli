@@ -1,12 +1,12 @@
 {
   "name": "",
   "version": "0.0.1",
-  "devDependencies": {},
-  "dependencies": {},
   "scripts": {
     "lint": "eslint . --fix --ext .js,.json",
     "prettier": "prettier --write"
   },
+  "devDependencies": {},
+  "dependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
