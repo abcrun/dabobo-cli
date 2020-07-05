@@ -2,7 +2,7 @@
   "name": "",
   "version": "0.0.1",
   "scripts": {
-    "lint": "eslint . --fix --ext .js,.json",
+    "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.json",
     "prettier": "prettier --write"
   },
   "devDependencies": {},
