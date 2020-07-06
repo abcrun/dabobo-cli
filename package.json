@@ -41,6 +41,7 @@
     "prettier": "2.0.5"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "inquirer": "^7.2.0"
   },
   "engines": {
