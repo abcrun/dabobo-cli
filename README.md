@@ -1,6 +1,6 @@
-### Cousin-cli
+### cousin-cli
 
-**A Front-End  Engineering Scaffold**
+A Front-End  Engineering Scaffold
 
 
 
@@ -16,4 +16,5 @@
 
 ![tip](https://raw.githubusercontent.com/abcrun/cousin/master/assets/tip.png)
 
-And then you can run `npm intall` and coding your project.
+And then you can run `npm install` and coding your project.
+
