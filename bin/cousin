@@ -16,6 +16,6 @@ program.option('-i, --init', 'initial a project', () => {
 program.parse(process.argv);
 
 const { rawArgs } = program;
-if (rawArgs.length === 2 || rawArgs.indexOf('--init') < 0) {
+if (rawArgs.length === 2 || rawArgs.indexOf('--init') < 0 || rawArgs.indexOf('-i') < 0) {
   program.help();
 }

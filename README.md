@@ -6,7 +6,7 @@ A Front-End  Engineering Scaffold
 
 ### Installation
 
-`npm install -g cousin-cli` or `yarn add cousin-cli`
+`npm install -g cousin-cli` or `yarn global add cousin-cli`
 
 
 

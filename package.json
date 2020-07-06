@@ -1,7 +1,7 @@
 {
   "name": "cousin-cli",
-  "version": "0.0.1",
-  "description": "前端工程化构建工具",
+  "version": "0.0.3",
+  "description": "A Front-End Engineering Scaffold",
   "bin": {
     "cousin": "bin/cousin"
   },
@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
+    "commander": "^5.1.0",
     "inquirer": "^7.2.0"
   },
   "engines": {
