@@ -13,9 +13,14 @@ program.option('-i, --init', 'initial a project', () => {
   require('../lib/options/init')();
 });
 
-program.parse(process.argv);
+program.on('command:*', () => {
+  program.help();
+});
 
-const { rawArgs } = program;
-if (rawArgs.length === 2 || rawArgs.indexOf('--init') < 0 || rawArgs.indexOf('-i') < 0) {
+if (process.argv.length === 2) {
   program.help();
 }
+
+program.parse(process.argv);
+
+
