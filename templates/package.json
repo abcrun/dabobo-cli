@@ -1,6 +1,7 @@
 {
   "name": "",
   "version": "0.0.1",
+  "main": "",
   "scripts": {
     "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.json",
     "prettier": "prettier --write"

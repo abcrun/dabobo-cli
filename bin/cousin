@@ -9,18 +9,26 @@ const program = require('commander');
 
 program.version(require('../package').version);
 
-program.option('-i, --init', 'initial a project', () => {
+program.option('-i, --init', 'initial a project').action(() => {
   require('../lib/options/init')();
 });
 
-program.on('command:*', () => {
-  program.help();
-});
+program
+  .command('dev')
+  .description('loading webdevserver and build development enviroment')
+  .action(() => {
+    require('../lib/commands/dev')();
+  });
+
+program
+  .command('build')
+  .description('build project')
+  .action(() => {
+    require('../lib/commands/prod')();
+  });
 
 if (process.argv.length === 2) {
   program.help();
 }
 
 program.parse(process.argv);
-
-
