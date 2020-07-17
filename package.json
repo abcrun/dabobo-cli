@@ -1,6 +1,6 @@
 {
   "name": "cousin-cli",
-  "version": "0.2.0",
+  "version": "0.2.0-beta",
   "description": "A Front-End Engineering Scaffold",
   "bin": {
     "cousin": "bin/cousin"
@@ -9,8 +9,29 @@
     "lint": "eslint . --fix --ext .js,.json",
     "prettier": "prettier --write"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abcrun/cousin.git"
+  },
   "author": "hrdesign@163.com",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abcrun/cousin/issues"
+  },
+  "keywords": [
+    "Front End Engineering Scaffold",
+    "Lint",
+    "Build",
+    "Webpack",
+    "React",
+    "Typescript",
+    "Less",
+    "Sass",
+    "Postcss",
+    "CSS Modules",
+    "前端工程化脚手架",
+    "构建"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
