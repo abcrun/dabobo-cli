@@ -15,14 +15,14 @@ program.option('-i, --init', 'initial a project').action(() => {
 
 program
   .command('dev')
-  .description('loading webdevserver and build development enviroment')
+  .description('build development enviroment')
   .action(() => {
     require('../lib/commands/dev')();
   });
 
 program
   .command('build')
-  .description('build project')
+  .description('build prodction enviroment')
   .action(() => {
     require('../lib/commands/prod')();
   });
