@@ -9,8 +9,10 @@ const program = require('commander');
 
 program.version(require('../package').version);
 
-program.option('-i, --init', 'initial a project').action(() => {
-  require('../lib/options/init')();
+program.option('-i, --init', 'initial a project').action((cmd) => {
+  const { args = [] } = cmd;
+  if (!args.length) require('../lib/options/init')();
+  else program.help();
 });
 
 program
