@@ -12,30 +12,12 @@ A Front-End  Engineering Scaffold
 
 ###### `cousin --init`
 
-Run `cousin --init` and then answer some questions that can inital a standard project as you want.
+Run `cousin --init` and then answer some questions to inital a  project as you want.
 
-* Please input your project name
-* Select a coding language you want to use
-  * ES6+
-  * Typescript
-* Which style guide do you want to follow?
-  * ESLint:recommended + Prettier
-  * Standard + Prettier
-  * AirBnB + Prettier
-* What functionality do you want to use?
-  * No Framework
-  * React
-* Do you want to enable the css modules?
-* Which CSS processor will be used?
-  * CSS
-  * LESS
-  * SASS
-* Use commitlint for commit messages?
-
-![tip](https://raw.githubusercontent.com/abcrun/cousin/master/assets/tip.png)
+![tip](http://blog.woritd.com/cousin-cli/init.gif)
 
 ##### Commands
 
-* `cousin dev` - build and run development enviroment.
-* `cousin build` - build the final file for production
+* `cousin dev` or run `npm start` - build and run development enviroment.
+* `cousin build` or run `npm build` - build the final files for production
 
