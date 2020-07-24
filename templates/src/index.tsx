@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 import './index.css';
 
 class App extends React.PureComponent {
@@ -12,4 +13,20 @@ class App extends React.PureComponent {
   }
 }
 
-ReactDom.render(<App />, document.querySelectorAll('.wrapper')[0]);
+ReactDom.render(
+  <AppContainer>
+    <App />
+  </AppContainer>,
+  document.querySelectorAll('.wrapper')[0]
+);
+
+if (typeof module.hot.accept === 'function') {
+  module.hot.accept(() => {
+    ReactDom.render(
+      <AppContainer>
+        <App />
+      </AppContainer>,
+      document.querySelectorAll('.wrapper')[0]
+    );
+  });
+}
