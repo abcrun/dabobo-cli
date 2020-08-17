@@ -1,6 +1,6 @@
 {
   "name": "cousin-cli",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A Front-End Engineering Scaffold",
   "bin": {
     "cousin": "bin/cousin"

@@ -12,6 +12,7 @@
   "@babel/plugin-syntax-dynamic-import": "^7.8.3",
   "babel-plugin-import": "1.13.0",
   "core-js": "^3.6.5",
+  "env-cmd": "^10.1.0",
   "eslint": "^7.2.0",
   "@commitlint/cli": "^9.0.1",
   "@commitlint/config-conventional": "^9.0.1",
