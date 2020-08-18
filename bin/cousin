@@ -18,7 +18,7 @@ program.option('-i, --init', 'initial a project').action((cmd) => {
 program
   .command('dev')
   .option('-e, --env <env>', 'set environment')
-  .description('for development building')
+  .description('for developping')
   .action((opt) => {
     const { env } = opt;
     require('../lib/commands/dev')(env);

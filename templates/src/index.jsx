@@ -14,7 +14,7 @@ class App extends React.PureComponent {
 
 ReactDom.render(<App />, document.querySelectorAll('.wrapper')[0]);
 
-if (typeof module.hot.accept === 'function') {
+if (typeof module.hot === 'object' && typeof module.hot.accept === 'function') {
   module.hot.accept(() => {
     ReactDom.render(<App />, document.querySelectorAll('.wrapper')[0]);
   });
