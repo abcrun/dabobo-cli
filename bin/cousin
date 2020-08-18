@@ -17,16 +17,20 @@ program.option('-i, --init', 'initial a project').action((cmd) => {
 
 program
   .command('dev')
-  .description('build development enviroment')
-  .action(() => {
-    require('../lib/commands/dev')();
+  .option('-e, --env <env>', 'set environment')
+  .description('for development building')
+  .action((opt) => {
+    const { env } = opt;
+    require('../lib/commands/dev')(env);
   });
 
 program
   .command('build')
+  .option('-e, --env <env>', 'set environment')
   .description('build prodction enviroment')
-  .action(() => {
-    require('../lib/commands/prod')();
+  .action((opt) => {
+    const { env } = opt;
+    require('../lib/commands/prod')(env);
   });
 
 if (process.argv.length === 2) {
