@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "main": "",
   "scripts": {
-    "start": "cousin dev",
-    "build": "cousin build",
+    "start": "cousin dev -e local",
+    "build": "cousin build -e prod",
     "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.json",
     "prettier": "prettier --write"
   },
