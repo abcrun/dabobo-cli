@@ -18,8 +18,14 @@ module.exports = {
   },
   noParse: [],
   externals: {},
-  styleResources: {}, // style-resource-loader pattern
   alias: {},
+  styleResources: {}, // style-resource-loader pattern
+  miniCssExtract: {
+    // min-css-extract-plugin for css config
+    publicPath: './',
+    filename: '[name].[hash:8].css',
+    chunkFileName: '[name].[hash:8].css',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: resolve('./public/index.html'),
