@@ -6,26 +6,44 @@ const { resolve } = require('path');
 module.exports = {
   port: 8000,
   entry: '<%= entry %>',
+  publicPath: '',
   output: {
-    path: resolve('./dist'),
-    publicPath: '',
-    filename: '[name].[hash:8].js',
-    chunkFilename: '[name].[hash:8].js',
-    assets: '[name].[hash:8].[ext]', // files mathch /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i
+    js: {
+      filename: '[name].[contenthash:8].js',
+      chunkFilename: '[name].[contenthash:8].js',
+    },
+    css: {
+      filename: '[name].[contenthash:8].css',
+      chunkFilename: '[name].[contenthash:8].css',
+    },
+    assets: '[name].[contenthash:8].[ext]', // files matches /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i
     library: 'Library',
     libraryTarget: 'umd',
     libraryExport: '',
   },
+  optimization: {
+    runtimeChunk: true,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          priority: 1,
+          chunks: 'initial',
+          name: 'vendor',
+          test: /node_modules/,
+          minChunks: 1,
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+        },
+      },
+    },
+  },
+  alias: {},
   noParse: [],
   externals: {},
-  alias: {},
   styleResources: {}, // style-resource-loader pattern
-  miniCssExtract: {
-    // min-css-extract-plugin for css config
-    publicPath: './',
-    filename: '[name].[hash:8].css',
-    chunkFileName: '[name].[hash:8].css',
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: resolve('./public/index.html'),
