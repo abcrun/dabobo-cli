@@ -35,7 +35,7 @@ program
 
 program
   .command('report')
-  .description('run to view the build repoart')
+  .description('run to view the build report')
   .action(() => {
     require('../lib/commands/report')();
   });
