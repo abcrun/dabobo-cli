@@ -33,6 +33,13 @@ program
     require('../lib/commands/prod')(env);
   });
 
+program
+  .command('report')
+  .description('run to view the build repoart')
+  .action(() => {
+    require('../lib/commands/report')();
+  });
+
 if (process.argv.length === 2) {
   program.help();
 }
