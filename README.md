@@ -18,6 +18,7 @@ Run `cousin --init` and then answer some questions to inital a  project as you w
 
 * `cousin dev` or run `npm start` - build and run development environment.
 * `cousin build` or run `npm build` - build the final files for production
+* `cousin report` or run `npm run report` - launch server for building report 
 
 ##### command with env
 
