@@ -97,7 +97,8 @@ module.exports = () => {
     .usage(`${chalk.green('<project-directory>')} [options]`)
     .action((name) => {
       projectName = name;
-    });
+    })
+    .option('--use-yarn', 'use yarn as package manager');
 
   program
     .command('dev')
@@ -205,8 +206,23 @@ module.exports = () => {
     // init project
     inquirer().then((answers) => {
       init(appName, root, answers).then(() => {
-        const deps = dependencies(answers);
-        spawn('npm', ['install', '--no-save', ...deps], { stdio: 'inherit' });
+        const { dependencies: deps, devDependencies } = dependencies(answers);
+        const useYarn = program.useYarn;
+        if (useYarn) {
+          spawn('yarnpkg', ['add', '--exact', ...devDependencies], {
+            stdio: 'inherit',
+          });
+          spawn('yarnpkg', ['add', '--dev', ...deps], {
+            stdio: 'inherit',
+          });
+        } else {
+          spawn('npm', ['install', '--exact', ...devDependencies], {
+            stdio: 'inherit',
+          });
+          spawn('npm', ['install', '--save-dev', ...deps], {
+            stdio: 'inherit',
+          });
+        }
       });
     });
   };
