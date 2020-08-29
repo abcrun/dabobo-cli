@@ -8,6 +8,7 @@ const chalk = require('chalk');
 
 const semver = require('semver');
 const https = require('https');
+const spawn = require('cross-spawn');
 const execSync = require('child_process').execSync;
 const validateProjectName = require('validate-npm-package-name');
 const fs = require('fs-extra');
@@ -192,6 +193,8 @@ module.exports = () => {
     // create dir - it is projectName for full path, and not appName
     fs.ensureDirSync(projectName);
 
+    process.chdir(root);
+
     // checkConflict
     if (isConflict(root, projectName)) {
       process.exit(1);
@@ -201,7 +204,7 @@ module.exports = () => {
     inquirer().then((answers) => {
       init(appName, root, answers).then(() => {
         const deps = dependencies(answers);
-        console.log(deps);
+        spawn('npm', ['install', '--no-save', ...deps], { stdio: 'inherit' });
       });
     });
   };
