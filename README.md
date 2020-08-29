@@ -8,9 +8,10 @@ A Front-End Engineering Scaffold For Lint and Building.
 
 ### Usage
 
-#### Initial rules with options
+#### Initial 
 
-Run `cousin --init` and then answer some questions to inital a  project as you want.
+Run `cousin <project-directory> [options]` and then answer some questions to inital a  project as you want.
+You can also run `cousin --help` to see details.
 
 ![tip](http://blog.woritd.com/cousin-cli/init.gif)
 
@@ -39,7 +40,9 @@ Run `cousin dev -e local`, and you will get the value "http://localhost" with th
 
 ##### config the building options
 
-You can config the options in the file `.cousinrc.js`, similar with webpack.config
+* You can config the options in the file `.cousinrc.js`, similar with webpack.config
+* `proxy.js` is for proxy config
+* `mock/index.js` is for mock config
 
 
 ### License

@@ -2,4 +2,4 @@
 
 'use strict';
 
-require('./cousin')();
+require('../lib/init')();
