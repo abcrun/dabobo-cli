@@ -209,17 +209,17 @@ module.exports = () => {
         const { dependencies: deps, devDependencies } = dependencies(answers);
         const useYarn = program.useYarn;
         if (useYarn) {
-          spawn('yarnpkg', ['add', '--exact', ...devDependencies], {
+          spawn('yarnpkg', ['add', '--dev', ...devDependencies], {
             stdio: 'inherit',
           });
-          spawn('yarnpkg', ['add', '--dev', ...deps], {
+          spawn('yarnpkg', ['add', ...deps], {
             stdio: 'inherit',
           });
         } else {
-          spawn('npm', ['install', '--exact', ...devDependencies], {
+          spawn('npm', ['install', '--save-dev', ...devDependencies], {
             stdio: 'inherit',
           });
-          spawn('npm', ['install', '--save-dev', ...deps], {
+          spawn('npm', ['install', ...deps], {
             stdio: 'inherit',
           });
         }
