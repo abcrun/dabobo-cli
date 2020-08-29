@@ -3,7 +3,7 @@
 'use strict';
 
 const path = require('path');
-const commander = require('commander');
+const program = require('commander');
 const chalk = require('chalk');
 
 const semver = require('semver');
@@ -86,17 +86,46 @@ const isConflict = (root, name) => {
 };
 
 module.exports = () => {
+  program.version(packageJson.version);
+
   let projectName;
-  const program = new commander.Command(packageJson.name)
-    .version(packageJson.version)
+  program
     .arguments('<project-directory>')
     .usage(`${chalk.green('<project-directory>')} [options]`)
     .action((name) => {
       projectName = name;
-    })
-    .option('--use-npm')
-    .option('--use-pnp')
-    .parse(process.argv);
+    });
+
+  program
+    .command('dev')
+    .option('-e, --env <env>', 'set environment')
+    .description('for developping')
+    .action((opt) => {
+      const { env } = opt;
+      require('./lib/commands/dev')(env);
+    });
+
+  program
+    .command('build')
+    .option('-e, --env <env>', 'set environment')
+    .description('build prodction enviroment')
+    .action((opt) => {
+      const { env } = opt;
+      require('./lib/commands/prod')(env);
+    });
+
+  program
+    .command('report')
+    .description('run to view the build report')
+    .action(() => {
+      require('./lib/commands/report')();
+    });
+
+  if (process.argv.length === 2) {
+    program.help();
+  }
+
+  program.parse(process.argv);
 
   // Check Node Version
   if (!semver.satisfies(process.version, '>=10')) {
@@ -141,36 +170,23 @@ module.exports = () => {
     const appName = path.basename(root);
 
     // Check projectName
-    if (typeof appName === 'undefined') {
-      console.error('Please specify the project directory:');
-      console.log(
-        `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
+    const validationResult = validateProjectName(appName);
+    if (!validationResult.validForNewPackages) {
+      console.error(
+        chalk.red(
+          `Cannot create a project named ${chalk.green(
+            `"${projectName}"`
+          )} because of npm naming restrictions:\n`
+        )
       );
-      console.log();
-      console.log('For example:');
-      console.log(
-        `  ${chalk.cyan(program.name())} ${chalk.green('my-project')}`
-      );
+      [
+        ...(validationResult.errors || []),
+        ...(validationResult.warnings || []),
+      ].forEach((error) => {
+        console.error(chalk.red(`  * ${error}`));
+      });
+      console.error(chalk.red('\nPlease choose a different project name.'));
       process.exit(1);
-    } else {
-      const validationResult = validateProjectName(appName);
-      if (!validationResult.validForNewPackages) {
-        console.error(
-          chalk.red(
-            `Cannot create a project named ${chalk.green(
-              `"${projectName}"`
-            )} because of npm naming restrictions:\n`
-          )
-        );
-        [
-          ...(validationResult.errors || []),
-          ...(validationResult.warnings || []),
-        ].forEach((error) => {
-          console.error(chalk.red(`  * ${error}`));
-        });
-        console.error(chalk.red('\nPlease choose a different project name.'));
-        process.exit(1);
-      }
     }
 
     // create dir - it is projectName for full path, and not appName
