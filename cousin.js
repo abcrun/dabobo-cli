@@ -97,6 +97,7 @@ module.exports = () => {
     .usage(`${chalk.green('<project-directory>')} [options]`)
     .action((name) => {
       projectName = name;
+      start();
     })
     .option('--use-yarn', 'use yarn as package manager');
 
@@ -131,42 +132,44 @@ module.exports = () => {
 
   program.parse(process.argv);
 
-  // Check Node Version
-  if (!semver.satisfies(process.version, '>=10')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} - An old unsupported version of tools.\n\n` +
-          `Please update to Node 10 or higher for a better, fully supported experience.\n`
-      )
-    );
-    process.exit(1);
-  }
-
-  // Check cousin-cli's latest version
-  console.log(chalk.greenBright('Checking for the latest version ...'));
-  getLatestVersion().then((latest) => {
-    if (latest && semver.lt(packageJson.version, latest)) {
-      console.log();
-      console.error(
+  function start() {
+    // Check Node Version
+    if (!semver.satisfies(process.version, '>=10')) {
+      console.log(
         chalk.yellow(
-          `You are running \`cousin-cli\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
-            'We no longer support global installation of cousin-cli.'
+          `You are using Node ${process.version} - An old unsupported version of tools.\n\n` +
+            `Please update to Node 10 or higher for a better, fully supported experience.\n`
         )
       );
-      console.log();
-      console.log(
-        'Please remove any global installs with one of the following commands:\n' +
-          '- npm uninstall -g cousin-cli\n' +
-          '- yarn global remove cousin-cli'
-      );
-      console.log();
       process.exit(1);
-    } else {
-      console.log(`v${latest}`);
-      console.log();
-      createProject();
     }
-  });
+
+    // Check cousin-cli's latest version
+    console.log(chalk.greenBright('Checking for the latest version ...'));
+    getLatestVersion().then((latest) => {
+      if (latest && semver.lt(packageJson.version, latest)) {
+        console.log();
+        console.error(
+          chalk.yellow(
+            `You are running \`cousin-cli\` ${packageJson.version}, which is behind the latest release (${latest}).\n\n` +
+              'We no longer support global installation of cousin-cli.'
+          )
+        );
+        console.log();
+        console.log(
+          'Please remove any global installs with one of the following commands:\n' +
+            '- npm uninstall -g cousin-cli\n' +
+            '- yarn global remove cousin-cli'
+        );
+        console.log();
+        process.exit(1);
+      } else {
+        console.log(`v${latest}`);
+        console.log();
+        createProject();
+      }
+    });
+  }
 
   const createProject = () => {
     // resolve projectName, such as: projectName: 'a/b/c', the appName is 'c'
@@ -209,17 +212,17 @@ module.exports = () => {
         const { dependencies: deps, devDependencies } = dependencies(answers);
         const useYarn = program.useYarn;
         if (useYarn) {
-          spawn('yarnpkg', ['add', '--dev', ...devDependencies], {
+          spawn.sync('yarnpkg', ['add', '--dev', ...devDependencies], {
             stdio: 'inherit',
           });
           spawn('yarnpkg', ['add', ...deps], {
             stdio: 'inherit',
           });
         } else {
-          spawn('npm', ['install', '--save-dev', ...devDependencies], {
+          spawn.sync('npm', ['install', '--save-dev', ...devDependencies], {
             stdio: 'inherit',
           });
-          spawn('npm', ['install', ...deps], {
+          spawn.sync('npm', ['install', ...deps], {
             stdio: 'inherit',
           });
         }
