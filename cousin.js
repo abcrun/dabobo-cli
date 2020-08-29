@@ -11,7 +11,6 @@ const https = require('https');
 const execSync = require('child_process').execSync;
 const validateProjectName = require('validate-npm-package-name');
 const fs = require('fs-extra');
-const spawn = require('cross-spawn');
 
 const inquirer = require('./inquirer');
 const init = require('./lib/fs');
@@ -184,10 +183,9 @@ module.exports = () => {
 
     // init project
     inquirer().then((answers) => {
-      init(root, answers).then(() => {
+      init(appName, root, answers).then(() => {
         const deps = dependencies(answers);
-        const args = ['install-peerdeps', '--loglevel', 'error'].concat(deps);
-        spawn('npm', args, { stdio: 'inherit' });
+        console.log(deps);
       });
     });
   };
