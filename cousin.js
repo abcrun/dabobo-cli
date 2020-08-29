@@ -46,15 +46,17 @@ const getLatestVersion = () => {
 };
 
 const isConflict = (root, name) => {
+  // only check nessary files
   const files = [
+    '.cousinrc.js',
     '.init',
-    '.eslintignore',
-    '.prettierignore',
+    '.eslintrc.json',
+    'babel.config.json',
+    'commitlint.config.js',
     '.prettierrc',
     '.env',
     '.browserslistrc',
     'proxy.js',
-    'mocker.js',
   ];
   const conflicts = fs.readdirSync(root).filter((file) => files.includes(file));
 
