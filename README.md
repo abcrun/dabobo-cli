@@ -11,7 +11,7 @@ A Front-End Engineering Scaffold For Lint and Building.
 #### Initial 
 
 Run `cousin <project-directory> [options]` and then answer some questions to inital a  project as you want.
-You can also run `cousin --help` to see details.
+You can run `cousin --help` to see more.
 
 ![tip](http://blog.woritd.com/cousin-cli/init.gif)
 
@@ -38,11 +38,18 @@ You can also add env with the building commands(such as `cousin dev -e local`), 
 
 Run `cousin dev -e local`, and you will get the value "http://localhost" with the expression `process.env.domain` in you JS file.
 
-##### config the building options
+##### config files
 
-* You can config the options in the file `.cousinrc.js`, similar with webpack.config
-* `proxy.js` is for proxy config
-* `mock/index.js` is for mock config
+* `.env` is for environment variables
+* `.cousinrc.js` is for webpack to run and build the project, similar with webpack.config
+* `proxy.js` is for proxy config when developping
+* `mock/index.js` is for mock config when developping
+* `babel.config.json` is for babel
+* `.eslintrc.json/.eslintignore` is for eslint
+* `.prettierrc/.prettierignore` is for prettier
+* `commlitlint.config.js` is for commmitlint
+* `.browserslistrc` is for buiding environment 
+
 
 
 ### License

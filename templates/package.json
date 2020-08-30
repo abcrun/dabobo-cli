@@ -8,8 +8,8 @@
     "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.json",
     "prettier": "prettier --write"
   },
-  "devDependencies": {},
   "dependencies": {},
+  "devDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
