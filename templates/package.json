@@ -5,11 +5,9 @@
   "scripts": {
     "start": "cousin dev -e local",
     "build": "cousin build -e prod",
-    "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.json",
-    "prettier": "prettier --write"
+    "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx}\"",
+    "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss}\""
   },
-  "dependencies": {},
-  "devDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -17,12 +15,18 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json}": [
+    "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint",
       "git add"
+    ],
+    "*.{json,css,less,sass,scss,md}": [
+      "prettier --write",
+      "git add"
     ]
   },
+  "dependencies": {},
+  "devDependencies": {},
   "engines": {
     "node": ">10.0.0"
   }
