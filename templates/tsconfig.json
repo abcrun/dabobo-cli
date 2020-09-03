@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "strictNullCheck": true,
+    "strictNullChecks": true,
     "jsx": "react"
   }
 }
