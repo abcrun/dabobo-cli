@@ -1,7 +1,0 @@
-body {
-  text-align: center;
-}
-.wrapper{ 
-  color: red;
-  & span { color: green }
-}
