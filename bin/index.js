@@ -76,7 +76,7 @@ program
   .description('create a new project')
   .option(
     '-r, --registry <url>',
-    'use specified npm registry when installing dependencies (only for npm)'
+    'use specified registry when installing dependencies'
   )
   .option(
     '--use-yarn',
@@ -94,6 +94,10 @@ program
     'install a project with an existing preset (default "./.presetrc")'
   )
   .option('-f, --file <file>', 'use a specified preset file for install')
+  .option(
+    '-r, --registry <url>',
+    'use specified registry when installing dependencies'
+  )
   .option(
     '--use-yarn',
     'use yarn as the package manager (the default package manager)'

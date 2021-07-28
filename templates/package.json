@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cousin dev -e local",
     "build": "cousin build -e prod",
-    "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx}\"",
+    "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx,vue}\"",
     "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss}\""
   },
   "husky": {
