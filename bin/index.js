@@ -39,7 +39,7 @@ function checkNodeVersion(latest) {
 }
 
 // check cousin-cli latest version
-async function checkCousinVersion() {
+function checkCousinVersion() {
   console.log(chalk.greenBright('Checking for the latest version ...'));
 
   const latest = require('child_process')
@@ -139,9 +139,7 @@ program
   .option('-o, --open', 'Open browser')
   .option('-p, --port <port>', 'Server port (default: 8080)')
   .action((entry, options) => {
-    console.log(entry, options);
-
-    // require('./lib/service/dev')(entry, options)
+    require('../lib/service/dev')(entry, options);
   });
 
 program
@@ -149,16 +147,15 @@ program
   .description('build production')
   .option('-e, --env <env>', 'set environment (default production)')
   .action((entry, options) => {
-    console.log(entry, options);
-
-    // require('./lib/service/build')(entry, options)
+    require('../lib/service/prod')(entry, options.env);
   });
 
 program
-  .command('report')
+  .command('report [entry]')
   .description('run to view the build report')
-  .action(() => {
-    // require('./lib/service/report')();
+  .option('-e, --env <env>', 'set environment (default production)')
+  .action((entry, options) => {
+    require('../lib/service/report')(entry, options.env);
   });
 
 program.arguments('<command>').action((cmd) => {
