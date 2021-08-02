@@ -1,4 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve } = require('path');
 
 module.exports = (mode) => {
@@ -48,11 +47,6 @@ module.exports = (mode) => {
     alias: {},
     noParse: [],
     externals: {},
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: resolve('./public/index.html'),
-        filename: 'index.html',
-      }),
-    ],
+    plugins: [],
   };
 };

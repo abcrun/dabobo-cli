@@ -65,7 +65,6 @@ function checkCousinVersion() {
 }
 
 checkNodeVersion(pkg.engines.node);
-checkCousinVersion();
 
 program
   .version(`cousin-cli ${pkg.version}`)
@@ -85,6 +84,8 @@ program
   .option('--use-npm', 'use npm as the package manager')
   .option('--use-pnpm', 'use pnpm as the package manager')
   .action((name, options) => {
+    checkCousinVersion();
+
     require('../lib/create')(name, options);
   });
 
