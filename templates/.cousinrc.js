@@ -14,13 +14,13 @@ module.exports = (mode) => {
       open: true,
     },
     js: {
-      filename: isDev ? '[name].js' : '[name].[hash:8].js',
-      chunkFilename: isDev ? '[name].chunk.js' : '[name].[hash:8].js',
+      filename: isDev ? '[name]' : '[name].[hash:8]',
+      chunkFilename: isDev ? '[name].chunk' : '[nam].[hash:8]',
     },
     css: {
-      modules: true,
-      filename: isDev ? '[name].css' : '[name].[hash:8].css',
-      chunkFilename: isDev ? '[name].chunk.css' : '[name].[hash:8].css',
+      modules: false,
+      filename: isDev ? '[name]' : '[name].[hash:8]',
+      chunkFilename: isDev ? '[name].chunk' : '[name].[hash:8]',
     },
     assets: {
       name: '[name].[hash:8].[ext]', // files matches /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i
