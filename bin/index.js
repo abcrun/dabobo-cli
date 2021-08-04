@@ -39,11 +39,11 @@ function checkNodeVersion(latest) {
 }
 
 // check cousin-cli latest version
-function checkCousinVersion() {
+function checkCousinVersion(registry) {
   console.log(chalk.greenBright('Checking for the latest version ...'));
 
   const latest = require('child_process')
-    .execSync('npm view cousin-cli version')
+    .execSync('npm view cousin-cli version --registry=' + registry)
     .toString()
     .trim();
 
@@ -84,7 +84,7 @@ program
   .option('--use-npm', 'use npm as the package manager')
   .option('--use-pnpm', 'use pnpm as the package manager')
   .action((name, options) => {
-    checkCousinVersion();
+    checkCousinVersion(options.registry);
 
     require('../lib/create')(name, options);
   });
