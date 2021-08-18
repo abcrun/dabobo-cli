@@ -1,6 +1,5 @@
 {
   "packages": ["packages/*"],
   "npmClient": "yarn",
-  "registry": "https://registry.npm.taobao.org",
   "version": "independent"
 }

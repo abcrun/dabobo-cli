@@ -3,20 +3,8 @@
   "version": "5.0.0",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
-  "scripts": {
-    "lint": "eslint . --fix --ext .js,.json",
-    "prettier": "prettier --write"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/abcrun/cousin.git",
-    "directory": "packages/cousin-service"
-  },
   "author": "hrdesign@163.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/abcrun/cousin/issues"
-  },
   "keywords": [
     "Front End Engineering Scaffold",
     "Lint",
@@ -33,35 +21,6 @@
     "前端工程化脚手架",
     "构建"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
-    "eslint": "^7.3.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-json": "^2.1.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.3.2"
-  },
   "dependencies": {
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -79,8 +38,5 @@
     "webpack": "^5.0.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-server": "^3.11.2"
-  },
-  "engines": {
-    "node": ">=10.0.0"
   }
 }

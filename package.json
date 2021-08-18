@@ -14,22 +14,6 @@
   "bugs": {
     "url": "https://github.com/abcrun/cousin/issues"
   },
-  "keywords": [
-    "Front End Engineering Scaffold",
-    "Lint",
-    "Build",
-    "Webpack",
-    "React",
-    "Vue",
-    "Typescript",
-    "Less",
-    "Sass",
-    "Postcss",
-    "Stylus",
-    "CSS Modules",
-    "前端工程化脚手架",
-    "构建"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",

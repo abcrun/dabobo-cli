@@ -5,20 +5,8 @@
   "bin": {
     "cousin": "bin/index.js"
   },
-  "scripts": {
-    "lint": "eslint . --fix --ext .js,.json",
-    "prettier": "prettier --write"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/abcrun/cousin.git",
-    "directory": "packages/cousin-cli"
-  },
   "author": "hrdesign@163.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/abcrun/cousin/issues"
-  },
   "keywords": [
     "Front End Engineering Scaffold",
     "Lint",
@@ -35,36 +23,6 @@
     "前端工程化脚手架",
     "构建"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
-    "eslint": "^7.3.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-json": "^2.1.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.3.2",
-    "@cousin/service": "^5.0.0"
-  },
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^8.0.0",
@@ -78,6 +36,6 @@
     "validate-npm-package-name": "^3.0.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": "^12.0.0 || >= 14.0.0"
   }
 }
