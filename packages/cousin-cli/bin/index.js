@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const semver = require('semver');
 const leven = require('leven');
 const fs = require('fs-extra');
+const execSync = require('child_process').execSync;
 
 const pkg = require('../package.json');
 
@@ -42,8 +43,11 @@ function checkNodeVersion(latest) {
 function checkCousinVersion(registry) {
   console.log(chalk.greenBright('Checking for the latest version ...'));
 
-  const latest = require('child_process')
-    .execSync('npm view cousin-cli version --registry=' + registry)
+  const latest = execSync(
+    registry
+      ? 'npm view cousin-cli version --registry=' + registry
+      : 'npm view cousin-cli version'
+  )
     .toString()
     .trim();
 
@@ -94,7 +98,7 @@ program
   .description(
     'install a project with an existing preset (default "./.presetrc")'
   )
-  .option('-f, --file <file>', 'use a specified preset file for install')
+  .option('-p, --preset <file>', 'use a specified preset file for install')
   .option(
     '-r, --registry <url>',
     'use specified registry when installing dependencies'
@@ -106,10 +110,10 @@ program
   .option('--use-npm', 'use npm as the package manager')
   .option('--use-pnpm', 'use pnpm as the package manager')
   .action((options) => {
-    const { file } = options;
+    const { preset } = options;
     const root = path.resolve();
     const projectName = path.basename(root);
-    const f = path.resolve(file || './.presetrc');
+    const f = path.resolve(preset || './.presetrc');
 
     fs.pathExists(f).then((exists) => {
       if (exists) {
@@ -126,41 +130,19 @@ program
   });
 
 program
-  .command('init <remote-url>')
-  .description('generate a project from a remote template')
-  .action((url) => {
-    console.log(url);
-
-    // require('./lib/init')(url)
+  .command('dev')
+  .description('alias of "npm run dev" in the current project')
+  .allowUnknownOption()
+  .action((entry, options) => {
+    execSync(`npm run dev ${process.argv.slice(3)}`);
   });
 
 program
-  .command('dev [entry]')
-  .description('for developping')
-  .option('-e, --env <env>', 'set environment (default development)')
-  .option('-o, --open', 'Open browser')
-  .option('-p, --port <port>', 'Server port (default: 8080)')
+  .command('build')
+  .description('alias of "npm run build" in the current project')
   .allowUnknownOption()
   .action((entry, options) => {
-    require('@cousin/service').dev(entry, options);
-  });
-
-program
-  .command('build [entry]')
-  .description('build production')
-  .option('-e, --env <env>', 'set environment (default production)')
-  .allowUnknownOption()
-  .action((entry, options) => {
-    require('@cousin/service').build(entry, options.env);
-  });
-
-program
-  .command('report [entry]')
-  .description('run to view the build report')
-  .option('-e, --env <env>', 'set environment (default production)')
-  .allowUnknownOption()
-  .action((entry, options) => {
-    require('@cousin/service').report(entry, options.env);
+    execSync(`npm run build ${process.argv.slice(3)}`);
   });
 
 program.arguments('<command>').action((cmd) => {

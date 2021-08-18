@@ -9,10 +9,7 @@ module.exports = (root, answer) => {
     '.prettierignore',
     '.browserslistrc',
     'commitlint.config.js',
-    '.env',
     '.gitignore',
-    './proxy/index.js',
-    './mock/index.js',
     './public/index.html',
   ];
 

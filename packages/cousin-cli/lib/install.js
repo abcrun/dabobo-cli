@@ -57,21 +57,14 @@ module.exports = (root, answer, options) => {
   const stylelint = require('./config/stylelint')(root, answer);
   const babel = require('./config/babel')(root, answer);
   const pkg = require('./config/package')(root, answer);
-  const cousinrc = require('./config/cousinrc')(root, answer);
   const registry = options.registry;
 
   console.log();
   console.log(chalk.greenBright('Initializing the necessary files...'));
-  Promise.all([
-    ...template,
-    presetrc,
-    eslint,
-    stylelint,
-    babel,
-    pkg,
-    cousinrc,
-  ]).then(() => {
-    const packageManager = getPackageManager(options);
-    addDependencies(packageManager, answer, registry);
-  });
+  Promise.all([...template, presetrc, eslint, stylelint, babel, pkg]).then(
+    () => {
+      const packageManager = getPackageManager(options);
+      addDependencies(packageManager, answer, registry);
+    }
+  );
 };
