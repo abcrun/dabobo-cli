@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const os = require('os');
 const { resolve } = require('path');
+const { CSSPREPROCESSOR } = require('../util/constant');
 
 module.exports = (root, answers) => {
   const { cssPreProcessor } = answers;
@@ -18,7 +19,7 @@ module.exports = (root, answers) => {
     },
   };
 
-  if (cssPreProcessor === 1) {
+  if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
     stylelint.plugins.push('stylelint-scss');
   }
 

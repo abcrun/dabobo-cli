@@ -1,34 +1,35 @@
 const fs = require('fs-extra');
 const os = require('os');
 const { resolve } = require('path');
+const { LANGUAGE, JSLINTER, LIBRARY } = require('../util/constant');
 
 function getExtends(answer) {
-  const { language, jsLinter, library, vue } = answer;
+  const { language, jsLinter, library, version } = answer;
   const extended = [];
 
-  if (language === 0) {
-    if (jsLinter === 0) {
+  if (language === LANGUAGE.ES6) {
+    if (jsLinter === JSLINTER.RECOMMENDED) {
       extended.push('eslint:recommended');
-    } else if (jsLinter === 1) {
+    } else if (jsLinter === JSLINTER.STANDARD) {
       extended.push('standard');
-    } else if (jsLinter === 2) {
+    } else if (jsLinter === JSLINTER.AIRBNB) {
       extended.push('airbnb');
     }
-  } else if (language === 1) {
-    if (jsLinter === 0) {
+  } else if (language === LANGUAGE.TYPESCRIPT) {
+    if (jsLinter === JSLINTER.RECOMMENDED) {
       extended.push('plugin:@typescript-eslint/recommended');
-    } else if (jsLinter === 1) {
+    } else if (jsLinter === JSLINTER.STANDARD) {
       extended.push('standard-with-typescript');
-    } else if (jsLinter === 2) {
+    } else if (jsLinter === JSLINTER.AIRBNB) {
       extended.push('airbnb-typescript');
     }
   }
 
-  if (library === 0) {
+  if (library === LIBRARY.VUE) {
     extended.push(
-      vue === 1 ? 'plugin:vue/vue3-recommended' : 'plugin:vue/recommended'
+      version === 3 ? 'plugin:vue/vue3-recommended' : 'plugin:vue/recommended'
     );
-  } else if (library === 1) {
+  } else if (library === LIBRARY.REACT) {
     extended.push('plugin:react/recommended');
   }
 

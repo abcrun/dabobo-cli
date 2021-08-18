@@ -3,12 +3,13 @@ const os = require('os');
 const path = require('path');
 
 const pkg = require('../../templates/package.json');
+const { LANGUAGE } = require('../util/constant');
 
 module.exports = (root, answer) => {
   const appName = path.basename(root);
   const { language } = answer;
 
-  const entry = language === 1 ? 'index.ts' : 'index.js';
+  const entry = language === LANGUAGE.TYPESCRIPT ? 'index.ts' : 'index.js';
   pkg.name = appName;
   pkg.main = './src/' + entry;
 

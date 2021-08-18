@@ -1,4 +1,10 @@
 const execSync = require('child_process').execSync;
+const {
+  LANGUAGE,
+  JSLINTER,
+  LIBRARY,
+  CSSPREPROCESSOR,
+} = require('./util/constant');
 
 const getPkg = (name, registry, exclude) => {
   let result = execSync(
@@ -37,29 +43,30 @@ const getLints = (answer, registry) => {
     '@commitlint/config-conventional',
   ];
 
-  if (language === 0) {
-    if (jsLinter === 1) {
+  if (language === LANGUAGE.ES6) {
+    if (jsLinter === JSLINTER.STANDARD) {
       const needs = getPkg('eslint-config-standard', registry);
       lints.push(...needs);
-    } else if (jsLinter === 2) {
+    } else if (jsLinter === JSLINTER.AIRBNB) {
       const needs = getPkg('eslint-config-airbnb', registry);
       lints.push(...needs);
     } else {
       lints.push('eslint');
     }
-  } else if (language === 1) {
+  } else if (language === LANGUAGE.TYPESCRIPT) {
     lints.push(
       'typescript',
       '@typescript-eslint/parser',
       '@typescript-eslint/eslint-plugin'
     );
 
-    if (jsLinter === 1) {
+    if (jsLinter === JSLINTER.STANDARD) {
       const needs = getPkg('eslint-config-standard-with-typescript', registry);
       lints.push(...needs);
-    } else if (jsLinter === 2) {
+    } else if (jsLinter === JSLINTER.AIRBNB) {
       // can't use peerDependencies, add dependencies manually
       lints.push(
+        'eslint',
         'eslint-config-airbnb-typescript@^12.3.1',
         'eslint-plugin-import@^2.22.0',
         'eslint-plugin-jsx-a11y@^6.3.1',
@@ -71,9 +78,9 @@ const getLints = (answer, registry) => {
     }
   }
 
-  if (library === 0) {
+  if (library === LIBRARY.VUE) {
     lints.push('eslint-plugin-vue');
-  } else if (library === 1 && jsLinter !== 2) {
+  } else if (library === LIBRARY.REACT && jsLinter !== JSLINTER.AIRBNB) {
     lints.push(
       'eslint-plugin-react',
       'eslint-plugin-react-hooks',
@@ -87,7 +94,7 @@ const getLints = (answer, registry) => {
       'stylelint-config-recess-order'
     );
 
-    if (cssPreProcessor === 1) {
+    if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
       lints.push('stylelint-scss');
     }
   }
@@ -96,24 +103,22 @@ const getLints = (answer, registry) => {
 };
 
 const getLibrary = (answer) => {
-  const { library, vue, react } = answer;
+  const { library, version } = answer;
   const libs = [];
 
-  if (library === 0) {
-    if (vue === 0) {
+  if (library === LIBRARY.VUE) {
+    if (version === 2) {
       libs.push('vue@^2.0.0');
-    } else if (vue === 1) {
+    } else if (version === 3) {
       libs.push('vue@^3.0.0');
     }
-  } else if (library === 1) {
+  } else if (library === LIBRARY.REACT) {
     libs.push('react-hot-loader');
 
-    if (react === 0) {
+    if (version === 16) {
       libs.push('react@^16.0.0', 'react-dom@^16.0.0');
-    } else if (react === 1) {
+    } else if (version === 17) {
       libs.push('react@^17.0.0', 'react-dom@^17.0.0');
-    } else if (react === 1) {
-      libs.push('react@^18.0.0', 'react-dom@^18.0.0');
     }
   }
 
@@ -121,27 +126,22 @@ const getLibrary = (answer) => {
 };
 
 module.exports = (answer, registry) => {
-  const { react, language } = answer;
+  const { version, language } = answer;
 
   const preCommit = ['husky', 'lint-staged'];
   const types =
-    language === 1
+    language === LANGUAGE.TYPESCRIPT
       ? [
           '@types/node',
           '@types/webpack-env', // typescript for webpack such as module.hot()
         ]
       : [];
 
-  typeof react !== 'undefined' &&
+  typeof version !== 'undefined' &&
     types.push('@types/react', '@types/react-dom');
 
   return {
     dependencies: getLibrary(answer),
-    devDependencies: [
-      // '@cousin/service',
-      ...getLints(answer, registry),
-      ...types,
-      ...preCommit,
-    ],
+    devDependencies: [...getLints(answer, registry), ...types, ...preCommit],
   };
 };

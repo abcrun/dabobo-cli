@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
+const { LANGUAGE } = require('../util/constant');
 
 module.exports = (root, answer) => {
   const { language } = answer;
@@ -13,7 +14,8 @@ module.exports = (root, answer) => {
     './public/index.html',
   ];
 
-  if (language === 1) files.push('assets.d.ts', 'tsconfig.json');
+  if (language === LANGUAGE.TYPESCRIPT)
+    files.push('assets.d.ts', 'tsconfig.json');
 
   return files.map((file) =>
     fs

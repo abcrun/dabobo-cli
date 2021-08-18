@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const os = require('os');
 const { resolve } = require('path');
+const { LANGUAGE, LIBRARY } = require('../util/constant');
 
 module.exports = (root, answer) => {
   const { language, library } = answer;
@@ -19,14 +20,15 @@ module.exports = (root, answer) => {
     ],
   };
 
-  if (library === 0) {
+  if (library === LIBRARY.VUE) {
     babel.presets = ['vue'];
-  } else if (library === 1) {
+  } else if (library === LIBRARY.REACT) {
     babel.presets = ['@babel/preset-env', '@babel/preset-react'];
     babel.plugins.push('react-hot-loader/babel');
   }
 
-  if (language === 1) babel.presets.push('@babel/preset-typescript');
+  if (language === LANGUAGE.TYSCRIPT)
+    babel.presets.push('@babel/preset-typescript');
 
   return fs
     .outputFile(
