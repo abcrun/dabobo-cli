@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "main": "",
   "scripts": {
-    "start": "cousin dev -e local",
-    "build": "cousin build -e prod",
+    "start": "",
+    "build": "",
     "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx,vue}\"",
-    "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss}\""
+    "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss,styl}\""
   },
   "husky": {
     "hooks": {
