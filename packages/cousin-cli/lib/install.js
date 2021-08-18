@@ -51,13 +51,13 @@ function addDependencies(packageManager, answer, registry) {
 }
 
 module.exports = (root, answer, options) => {
-  const template = require('./template')(root, answer);
-  const presetrc = require('./presetrc')(root, answer);
-  const eslint = require('./eslint')(root, answer);
-  const stylelint = require('./stylelint')(root, answer);
-  const babel = require('./babel')(root, answer);
-  const pkg = require('./package')(root, answer);
-  const cousinrc = require('./cousinrc')(root, answer);
+  const template = require('./config/template')(root, answer);
+  const presetrc = require('./config/presetrc')(root, answer);
+  const eslint = require('./config/eslint')(root, answer);
+  const stylelint = require('./config/stylelint')(root, answer);
+  const babel = require('./config/babel')(root, answer);
+  const pkg = require('./config/package')(root, answer);
+  const cousinrc = require('./config/cousinrc')(root, answer);
   const registry = options.registry;
 
   console.log();

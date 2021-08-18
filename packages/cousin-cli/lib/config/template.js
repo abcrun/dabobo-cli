@@ -21,7 +21,7 @@ module.exports = (root, answer) => {
   return files.map((file) =>
     fs
       .copy(
-        path.resolve(__dirname, '../templates', file),
+        path.resolve(__dirname, '../../templates', file),
         path.resolve(root, file)
       )
       .then((res) => {

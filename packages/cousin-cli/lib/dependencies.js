@@ -95,35 +95,6 @@ const getLints = (answer, registry) => {
   return lints;
 };
 
-const getBabels = (answer) => {
-  const { language, library } = answer;
-  const babels = [
-    '@babel/cli',
-    '@babel/runtime-corejs3',
-    'core-js',
-    '@babel/core',
-    '@babel/plugin-transform-runtime',
-    '@babel/preset-env',
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-decorators',
-    '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-syntax-dynamic-import',
-    'babel-plugin-import',
-  ];
-
-  if (library === 0) {
-    babels.push('babel-preset-vue');
-  } else if (library === 1) {
-    babels.push('@babel/preset-react');
-  }
-
-  if (language === 1) {
-    babels.push('@babel/preset-typescript');
-  }
-
-  return babels;
-};
-
 const getLibrary = (answer) => {
   const { library, vue, react } = answer;
   const libs = [];
@@ -149,42 +120,17 @@ const getLibrary = (answer) => {
   return libs;
 };
 
-const getWebpack = (answer, registry) => {
-  const { cssPreProcessor, vue } = answer;
-  const webpack = [
-    // 'cousin-cli',
-    'webpack-cli',
-    'babel-loader',
-    'thread-loader',
-    'style-loader',
-    'css-loader',
-    'url-loader',
-    'file-loader',
-    'html-webpack-plugin',
-  ];
-
-  typeof vue !== 'undefined' &&
-    webpack.push('vue-loader', 'vue-template-compiler');
-
-  if (cssPreProcessor === 0) {
-    webpack.push(...getPkg('less-loader', registry));
-  } else if (cssPreProcessor === 1) {
-    webpack.push(...getPkg('sass-loader', registry));
-  } else if (cssPreProcessor === 2) {
-    webpack.push(...getPkg('stylus-loader', registry));
-  } else {
-    webpack.push('webpack');
-  }
-  webpack.push(...getPkg('postcss-loader', registry, 'webpack'));
-
-  return webpack;
-};
-
 module.exports = (answer, registry) => {
-  const { react } = answer;
+  const { react, language } = answer;
 
-  const types = ['@types/node', '@types/webpack-env'];
-  const build = ['husky', 'lint-staged'];
+  const preCommit = ['husky', 'lint-staged'];
+  const types =
+    language === 1
+      ? [
+          '@types/node',
+          '@types/webpack-env', // typescript for webpack such as module.hot()
+        ]
+      : [];
 
   typeof react !== 'undefined' &&
     types.push('@types/react', '@types/react-dom');
@@ -192,11 +138,10 @@ module.exports = (answer, registry) => {
   return {
     dependencies: getLibrary(answer),
     devDependencies: [
+      // '@cousin/service',
       ...getLints(answer, registry),
-      ...getBabels(answer),
       ...types,
-      ...getWebpack(answer, registry),
-      ...build,
+      ...preCommit,
     ],
   };
 };

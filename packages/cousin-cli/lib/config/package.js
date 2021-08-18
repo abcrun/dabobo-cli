@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
 
-const pkg = require('../templates/package.json');
+const pkg = require('../../templates/package.json');
 
 module.exports = (root, answer) => {
   const appName = path.basename(root);

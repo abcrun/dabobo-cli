@@ -113,6 +113,7 @@ program
 
     fs.pathExists(f).then((exists) => {
       if (exists) {
+        // need to check schema
         fs.readJson(f).then((preset) => {
           if (!require('../lib/util').isConflict(root, projectName)) {
             require('../lib/install')(root, preset, options);
@@ -139,24 +140,27 @@ program
   .option('-e, --env <env>', 'set environment (default development)')
   .option('-o, --open', 'Open browser')
   .option('-p, --port <port>', 'Server port (default: 8080)')
+  .allowUnknownOption()
   .action((entry, options) => {
-    require('../lib/service/dev')(entry, options);
+    require('@cousin/service').dev(entry, options);
   });
 
 program
   .command('build [entry]')
   .description('build production')
   .option('-e, --env <env>', 'set environment (default production)')
+  .allowUnknownOption()
   .action((entry, options) => {
-    require('../lib/service/prod')(entry, options.env);
+    require('@cousin/service').build(entry, options.env);
   });
 
 program
   .command('report [entry]')
   .description('run to view the build report')
   .option('-e, --env <env>', 'set environment (default production)')
+  .allowUnknownOption()
   .action((entry, options) => {
-    require('../lib/service/report')(entry, options.env);
+    require('@cousin/service').report(entry, options.env);
   });
 
 program.arguments('<command>').action((cmd) => {

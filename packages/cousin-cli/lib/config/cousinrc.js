@@ -9,7 +9,7 @@ module.exports = (root, answer) => {
 
   const entry = language === 1 ? 'index.ts' : 'index.js';
   memEditor.copyTpl(
-    resolve(__dirname, '../templates/.cousinrc.js'),
+    resolve(__dirname, '../../templates/.cousinrc.js'),
     resolve(root, './.cousinrc.js'),
     { entry: 'src/' + entry }
   );

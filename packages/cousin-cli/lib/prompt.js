@@ -58,7 +58,6 @@ module.exports = [
       { name: '18.x', value: 2 },
     ],
   },
-
   {
     type: 'list',
     name: 'cssPreProcessor',
