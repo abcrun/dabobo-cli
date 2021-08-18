@@ -3,8 +3,9 @@
   "npmClient": "yarn",
   "version": "independent",
   "command": {
-    "version": {
-      "conventionalCommits": true
+    "publish": {
+      "ignoreChanges": ["*.md"],
+      "message": "chore: publish"
     }
   }
 }
