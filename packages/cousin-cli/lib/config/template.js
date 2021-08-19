@@ -10,21 +10,23 @@ module.exports = (root, answer) => {
     '.prettierignore',
     '.browserslistrc',
     'commitlint.config.js',
-    '.gitignore',
+    '.ignore',
     './public/index.html',
   ];
 
   if (language === LANGUAGE.TYPESCRIPT)
     files.push('assets.d.ts', 'tsconfig.json');
 
-  return files.map((file) =>
-    fs
+  return files.map((file) => {
+    const fileName = file === '.ignore' ? '.gitignore' : file;
+
+    return fs
       .copy(
         path.resolve(__dirname, '../../templates', file),
-        path.resolve(root, file)
+        path.resolve(root, fileName)
       )
       .then((res) => {
         console.log(`  created ${file}`);
-      })
-  );
+      });
+  });
 };

@@ -91,11 +91,14 @@ const getLints = (answer, registry) => {
   if (useStyleLint) {
     lints.push(
       ...getPkg('stylelint-config-standard', registry),
+      'stylelint-order',
       'stylelint-config-recess-order'
     );
 
     if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
       lints.push('stylelint-scss');
+    } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
+      lints.push('stylelint-plugin-stylus');
     }
   }
 

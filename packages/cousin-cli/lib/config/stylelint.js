@@ -6,7 +6,7 @@ const { CSSPREPROCESSOR } = require('../util/constant');
 module.exports = (root, answers) => {
   const { cssPreProcessor } = answers;
   const stylelint = {
-    extends: ['stylelint-config-standard', 'stylelint-config-recess-order'],
+    extends: ['stylelint-config-standard'],
     plugins: [],
     rules: {
       'at-rule-no-unknown': [
@@ -21,7 +21,11 @@ module.exports = (root, answers) => {
 
   if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
     stylelint.plugins.push('stylelint-scss');
+  } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
+    stylelint.extends.push('stylelint-plugin-stylus/standard');
   }
+
+  stylelint.extends.push('stylelint-config-recess-order');
 
   return fs
     .outputFile(

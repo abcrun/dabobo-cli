@@ -6,6 +6,7 @@
     "start": "",
     "build": "",
     "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx,vue}\"",
+    "stylelint": "stylelint \"{,src/**/*}.{css,scss,less,styl,vue}\"",
     "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss,styl}\""
   },
   "husky": {
@@ -20,8 +21,9 @@
       "eslint",
       "git add"
     ],
-    "*.{json,css,less,sass,scss,md}": [
+    "*.{css,less,sass,scss}": [
       "prettier --write",
+      "stylelint",
       "git add"
     ]
   },
