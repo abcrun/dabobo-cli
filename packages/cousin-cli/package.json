@@ -5,6 +5,11 @@
   "bin": {
     "cousin": "bin/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abcrun/cousin.git",
+    "directory": "packages/cousin-cli"
+  },
   "author": "hrdesign@163.com",
   "license": "MIT",
   "keywords": [

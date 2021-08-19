@@ -63,7 +63,7 @@ module.exports = (root, answer) => {
     },
   };
 
-  if (language === 1) {
+  if (language === LANGUAGE.TYPESCRIPT) {
     eslint.parser = '@typescript-eslint/parser';
     eslint.parserOptions.project = './tsconfig.json';
   }
