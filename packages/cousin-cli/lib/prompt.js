@@ -78,4 +78,31 @@ module.exports = [
     message: 'Do you want to enable stylelint?',
     default: true,
   },
+  {
+    type: 'list',
+    name: 'buildingTool',
+    message: 'Choose a Building tool',
+    default: 'cousin',
+    when: function (answers) {
+      return answers.library === LIBRARY.VUE;
+    },
+    choices: [
+      { name: 'cousin-service(default)', value: 'cousin' },
+      { name: 'vue-cli-service', value: 'vue' },
+    ],
+  },
+  {
+    type: 'list',
+    name: 'buildingTool',
+    message: 'Choose a Building tool',
+    default: 'cousin',
+    when: function (answers) {
+      return answers.library === LIBRARY.REACT;
+    },
+    choices: [
+      { name: 'cousin-service(default)', value: 'cousin' },
+      { name: 'umi', value: 'umi' },
+      { name: 'react-scripts', value: 'react' },
+    ],
+  },
 ];

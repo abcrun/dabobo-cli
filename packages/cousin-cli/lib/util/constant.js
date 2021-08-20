@@ -19,4 +19,10 @@ module.exports = {
     STYLUS: 'stylus',
     NOPROCESSOR: 'noprocessor',
   },
+  BUILDINGTOOL: {
+    VUE: 'vue',
+    REACT: 'react',
+    UMI: 'umi',
+    COUSIN: 'cousin',
+  },
 };

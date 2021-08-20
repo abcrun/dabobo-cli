@@ -4,6 +4,7 @@ const {
   JSLINTER,
   LIBRARY,
   CSSPREPROCESSOR,
+  BUILDINGTOOL,
 } = require('./util/constant');
 
 const getPkg = (name, registry, exclude) => {
@@ -128,6 +129,29 @@ const getLibrary = (answer) => {
   return libs;
 };
 
+const getBuildingTool = (answer) => {
+  const { buildingTool, cssPreProcessor } = answer;
+  const tools = [];
+
+  if (buildingTool === BUILDINGTOOL.VUE) {
+    tools.push('@vue/cli-service');
+  } else if (buildingTool === BUILDINGTOOL.UMI) {
+    tools.push('umi');
+  } else if (buildingTool === BUILDINGTOOL.REACT) {
+    tools.push('react-scripts');
+  } else {
+    tools.push('cousin-service');
+  }
+
+  if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
+    tools.push('node-sass', 'sass-loader');
+  } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
+    tools.push('stylus', 'stylus-loader');
+  }
+
+  return tools;
+};
+
 module.exports = (answer, registry) => {
   const { version, language } = answer;
 
@@ -145,6 +169,11 @@ module.exports = (answer, registry) => {
 
   return {
     dependencies: getLibrary(answer),
-    devDependencies: [...getLints(answer, registry), ...types, ...preCommit],
+    devDependencies: [
+      ...getLints(answer, registry),
+      ...types,
+      ...preCommit,
+      ...getBuildingTool(answer),
+    ],
   };
 };

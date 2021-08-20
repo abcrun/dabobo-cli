@@ -1,9 +1,9 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { LANGUAGE } = require('../util/constant');
+const { LANGUAGE, BUILDINGTOOL } = require('../util/constant');
 
 module.exports = (root, answer) => {
-  const { language } = answer;
+  const { language, buildingTool } = answer;
   const files = [
     '.eslintignore',
     '.prettierrc',
@@ -17,6 +17,10 @@ module.exports = (root, answer) => {
   if (language === LANGUAGE.TYPESCRIPT)
     files.push('assets.d.ts', 'tsconfig.json');
 
+  if (buildingTool === BUILDINGTOOL.COUSIN) {
+    files.push('./proxy/index.js', './mock/index.js', '.env');
+  }
+
   return files.map((file) => {
     const fileName = file === '.ignore' ? '.gitignore' : file;
 
@@ -26,7 +30,7 @@ module.exports = (root, answer) => {
         path.resolve(root, fileName)
       )
       .then((res) => {
-        console.log(`  created ${file}`);
+        console.log(`  created ${fileName}`);
       });
   });
 };
