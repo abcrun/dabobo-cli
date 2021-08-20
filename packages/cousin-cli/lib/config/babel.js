@@ -21,7 +21,7 @@ module.exports = (root, answer) => {
   };
 
   if (library === LIBRARY.VUE) {
-    babel.presets = ['vue'];
+    babel.presets = ['@babel/preset-env', 'vue'];
   } else if (library === LIBRARY.REACT) {
     babel.presets = ['@babel/preset-env', '@babel/preset-react'];
     babel.plugins.push('react-hot-loader/babel');

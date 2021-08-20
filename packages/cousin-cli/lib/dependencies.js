@@ -106,6 +106,29 @@ const getLints = (answer, registry) => {
   return lints;
 };
 
+const getBabels = (answer) => {
+  const { language, library } = answer;
+  const babels = [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-decorators',
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-syntax-dynamic-import',
+    'babel-plugin-import',
+  ];
+
+  if (library === LIBRARY.VUE) {
+    babels.push('babel-preset-vue');
+  } else if (library === LIBRARY.REACT) {
+    babels.push('@babel/preset-react');
+  }
+
+  if (language === LANGUAGE.TYPESCRIPT) {
+    babels.push('@babel/preset-typescript');
+  }
+
+  return babels;
+};
+
 const getLibrary = (answer) => {
   const { library, version } = answer;
   const libs = [];
@@ -171,6 +194,7 @@ module.exports = (answer, registry) => {
     dependencies: getLibrary(answer),
     devDependencies: [
       ...getLints(answer, registry),
+      ...getBabels(answer, registry),
       ...types,
       ...preCommit,
       ...getBuildingTool(answer),
