@@ -1,6 +1,6 @@
 {
   "name": "@cousin/service",
-  "version": "0.0.1",
+  "version": "0.0.2-alpha.0",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
   "bin": {
