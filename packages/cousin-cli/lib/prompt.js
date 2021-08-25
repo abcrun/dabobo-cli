@@ -7,7 +7,7 @@ module.exports = [
     message: 'Select a programming language you want to use',
     default: 0,
     choices: [
-      { name: 'ES6+', value: 'es6' },
+      { name: 'ES6+', value: 'es6+' },
       { name: 'Typescript', value: 'typescript' },
     ],
   },
@@ -101,8 +101,8 @@ module.exports = [
     },
     choices: [
       { name: 'cousin-service(default)', value: 'cousin' },
-      { name: 'umi', value: 'umi' },
       { name: 'react-scripts', value: 'react' },
+      { name: 'umi', value: 'umi' },
     ],
   },
 ];

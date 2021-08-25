@@ -3,8 +3,8 @@ const os = require('os');
 const { resolve } = require('path');
 const { CSSPREPROCESSOR } = require('../util/constant');
 
-module.exports = (root, answers) => {
-  const { cssPreProcessor } = answers;
+module.exports = (root, preset) => {
+  const { cssPreProcessor } = preset;
   const stylelint = {
     extends: ['stylelint-config-standard'],
     plugins: [],

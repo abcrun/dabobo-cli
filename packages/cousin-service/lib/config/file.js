@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader-plugin');
+const { LIBRARY } = require('../constant');
 
 module.exports = (library, options, mode) => {
   const fInclude = [path.resolve('.')];
@@ -21,7 +22,7 @@ module.exports = (library, options, mode) => {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  if (library === 0) {
+  if (library === LIBRARY.VUE) {
     // vue
     rules.push({ test: /\.vue/i, use: ['vue-loader'] });
     plugins.push(new VueLoaderPlugin());

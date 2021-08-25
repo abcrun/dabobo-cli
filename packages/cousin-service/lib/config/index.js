@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
+const { LIBRARY } = require('../constant');
+
 const cousin = require(path.resolve('./.cousinrc.js'));
 const envs = fs.readJsonSync(path.resolve('./.env'));
 const presetrc = fs.readJsonSync(path.resolve('./.presetrc'));
@@ -40,7 +42,7 @@ module.exports = (mode, env, commandEntry) => {
   const formatEntry = (entry instanceof Array ? entry : [entry]).map((url) => {
     return path.resolve(url);
   });
-  if (lib === 1) formatEntry.unshift('react-hot-loader/patch');
+  if (lib === LIBRARY.REACT) formatEntry.unshift('react-hot-loader/patch');
 
   // 处理plugins
   const plugins = [

@@ -2,7 +2,7 @@
 
 module.exports = {
   '/test': {
-    target: '',
+    target: '//localhost',
     changeOrigin: true,
   },
 };

@@ -11,8 +11,12 @@ module.exports = (root, answer) => {
     '.browserslistrc',
     'commitlint.config.js',
     '.ignore',
-    './public/index.html',
   ];
+
+  // umi don't need public/index.html
+  if (buildingTool !== BUILDINGTOOL.UMI) {
+    files.push('./public/index.html');
+  }
 
   if (language === LANGUAGE.TYPESCRIPT)
     files.push('assets.d.ts', 'tsconfig.json');

@@ -3,8 +3,8 @@ const os = require('os');
 const { resolve } = require('path');
 const { LANGUAGE, JSLINTER, LIBRARY } = require('../util/constant');
 
-function getExtends(answer) {
-  const { language, jsLinter, library, version } = answer;
+function getExtends(preset) {
+  const { language, jsLinter, library, version } = preset;
   const extended = [];
 
   if (language === LANGUAGE.ES6) {
@@ -38,8 +38,8 @@ function getExtends(answer) {
   return extended;
 }
 
-module.exports = (root, answer) => {
-  const { language } = answer;
+module.exports = (root, preset) => {
+  const { language } = preset;
   const eslint = {
     root: true,
     env: {
@@ -68,7 +68,7 @@ module.exports = (root, answer) => {
     eslint.parserOptions.project = './tsconfig.json';
   }
 
-  eslint.extends = getExtends(answer);
+  eslint.extends = getExtends(preset);
 
   return fs
     .outputFile(

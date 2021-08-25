@@ -1,5 +1,4 @@
 const path = require('path');
-const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
@@ -16,31 +15,21 @@ module.exports = (entry, options) => {
 
   const config = require('./config')('development', env, entry);
   const complier = webpack(config);
-  const server = new WebpackDevServer(complier, {
-    contentBase: path.resolve('./public'),
-    historyApiFallback: true,
-    hot: true,
-    port: port || 8000,
-    overlay: true,
-    compress: true, // gzip
-    watchOptions: {
-      ignored: /node_modules/,
+  const server = new WebpackDevServer(
+    {
+      historyApiFallback: true,
+      open: true,
+      hot: true,
+      port: port || 8000,
+      compress: true, // gzip
+      proxy,
+      onBeforeSetupMiddleware: (devServer) => {
+        apiMocker(devServer.app, path.resolve('./mock/index.js'));
+      },
+      ...devServer,
     },
-    before: (app) => {
-      apiMocker(app, path.resolve('./mock/index.js'));
-    },
-    proxy,
-    ...devServer,
-  });
+    complier
+  );
 
-  server.listen(devServer.port, 'localhost', (err) => {
-    if (err) console.log(chalk.bold.red(err));
-    else {
-      console.log(
-        chalk.bold.green(
-          'server is running at http://localhost:' + devServer.port + '\n'
-        )
-      );
-    }
-  });
+  server.start();
 };

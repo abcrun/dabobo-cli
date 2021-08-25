@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CSSPREPROCESSOR } = require('../constant');
 
 module.exports = (cssPreProcessor, options, mode) => {
   const defaultName = '[name].[contenthash:8]';
@@ -23,16 +24,13 @@ module.exports = (cssPreProcessor, options, mode) => {
       loader: 'postcss-loader',
       options: {
         postcssOptions: {
-          plugins: [
-            require('postcss-import')(),
-            require('postcss-preset-env')(),
-          ],
+          plugins: [require('postcss-preset-env')()],
         },
       },
     },
   ];
 
-  if (cssPreProcessor === 0) {
+  if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
     // less
     rules.push(
       {
@@ -44,7 +42,7 @@ module.exports = (cssPreProcessor, options, mode) => {
         use: [...loaders, 'less-loader'],
       }
     );
-  } else if (cssPreProcessor === 1) {
+  } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
     // sass
     rules.push(
       {
@@ -60,7 +58,7 @@ module.exports = (cssPreProcessor, options, mode) => {
         use: [...loaders, 'sass-loader?indentedSyntax'],
       }
     );
-  } else if (cssPreProcessor === 2) {
+  } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
     // stylus
     rules.push(
       {
@@ -68,7 +66,7 @@ module.exports = (cssPreProcessor, options, mode) => {
         use: loaders,
       },
       {
-        test: /\.styl$/i,
+        test: /\.(?:styl|stylus)$/i,
         use: [...loaders, 'stylus-loader'],
       }
     );

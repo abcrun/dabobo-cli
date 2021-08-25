@@ -8,6 +8,10 @@ yarn-debug.log*
 yarn-error.log
 lerna-debug.log*
 
+# lock files
+yarn.lock
+package-lock.json
+
 # Editor directories and files
 .DS_Store
 .idea

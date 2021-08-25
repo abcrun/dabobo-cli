@@ -1,15 +1,17 @@
 const memFs = require('mem-fs');
 const editor = require('mem-fs-editor');
 const { resolve } = require('path');
+const { LANGUAGE } = require('../util/constant');
 
-module.exports = (root, answer) => {
-  const { language } = answer;
+module.exports = (root, preset) => {
+  const { language } = preset;
   const store = memFs.create();
   const memEditor = editor.create(store);
 
-  const entry = language === 1 ? 'index.ts' : 'index.js';
+  const entry = language === LANGUAGE.TYPESCRIPT ? 'index.ts' : 'index.js';
+
   memEditor.copyTpl(
-    resolve(__dirname, '../../../templates/.cousinrc.js'),
+    resolve(__dirname, '../../templates/.cousinrc.js'),
     resolve(root, './.cousinrc.js'),
     { entry: 'src/' + entry }
   );
