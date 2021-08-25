@@ -1,6 +1,6 @@
 {
   "name": "cousin-service",
-  "version": "0.0.2-alpha.4",
+  "version": "0.1.1",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
   "bin": {
@@ -52,8 +52,8 @@
     "less-loader": "^10.0.1",
     "mini-css-extract-plugin": "latest",
     "mocker-api": "^2.3.5",
-    "postcss": "^8.0.1",
     "postcss-loader": "^6.1.1",
+    "postcss": "^8.0.1",
     "postcss-preset-env": "^6.7.0",
     "style-loader": "^3.2.1",
     "thread-loader": "^3.0.4",

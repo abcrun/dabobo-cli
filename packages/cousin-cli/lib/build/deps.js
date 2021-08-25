@@ -25,6 +25,8 @@ module.exports = (preset, registry) => {
       tools.push('cousin-service');
     }
 
+    tools.push('postcss-loader'); // cousin-service include this module, but when intall cousin-service in the created project, this module will not be installed
+
     if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
       tools.push(...getPkg('less-loader', registry, 'webpack'));
     } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
