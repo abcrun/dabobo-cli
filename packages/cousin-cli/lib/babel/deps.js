@@ -8,23 +8,24 @@ module.exports = (preset, registry) => {
     return [];
   }
 
+  // cousin-service includes these pkgs in deps
   const babels = [
-    '@babel/preset-env',
-    '@babel/plugin-transform-runtime',
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-proposal-decorators',
-    '@babel/plugin-syntax-dynamic-import',
+    // '@babel/preset-env',
+    // '@babel/plugin-transform-runtime',
+    // '@babel/plugin-proposal-class-properties',
+    // '@babel/plugin-proposal-object-rest-spread',
+    // '@babel/plugin-proposal-decorators',
+    // '@babel/plugin-syntax-dynamic-import',
   ];
 
   if (library === LIBRARY.VUE) {
-    babels.push('babel-preset-vue');
+    babels.push('babel-preset-vue:^2.0.2');
   } else if (library === LIBRARY.REACT) {
-    babels.push('@babel/preset-react');
+    babels.push('@babel/preset-react:^7.14.5');
   }
 
   if (language === LANGUAGE.TYPESCRIPT) {
-    babels.push('@babel/preset-typescript');
+    babels.push('@babel/preset-typescript:^7.15.0');
   }
 
   return babels;

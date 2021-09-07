@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
-const execSync = require('child_process').execSync;
 
 exports.isConflict = function (root, name, extraFiles = []) {
   // only check nessary files
@@ -46,31 +45,4 @@ exports.isConflict = function (root, name, extraFiles = []) {
   }
 
   return false;
-};
-
-exports.getPkg = (name, registry, exclude) => {
-  let result = execSync(
-    'npm view ' +
-      name +
-      ' peerDependencies' +
-      (registry ? ' --registry=' + registry : '')
-  )
-    .toString()
-    .trim();
-
-  result = result.replace(/'/g, '"').replace(/([^{\s'"]+)\s*:/g, ($0, $1) => {
-    return '"' + $1 + '":';
-  });
-  result = JSON.parse(result);
-
-  if (exclude) {
-    delete result[exclude];
-  }
-
-  const deps = Object.keys(result).map((k) => {
-    return k + '@' + result[k];
-  });
-  deps.unshift(name);
-
-  return deps;
 };

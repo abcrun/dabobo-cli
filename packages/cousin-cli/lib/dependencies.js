@@ -6,17 +6,17 @@ const getLibrary = (preset) => {
 
   if (library === LIBRARY.VUE) {
     if (version === 2) {
-      libs.push('vue@^2.0.0');
+      libs.push('vue:^2.0.0');
     } else if (version === 3) {
-      libs.push('vue@^3.0.0');
+      libs.push('vue:^3.0.0');
     }
   } else if (library === LIBRARY.REACT) {
-    libs.push('react-hot-loader');
+    libs.push('react-hot-loader:^4.13.0');
 
     if (version === 16) {
-      libs.push('react@^16.0.0', 'react-dom@^16.0.0');
+      libs.push('react:^16.0.0', 'react-dom:^16.0.0');
     } else if (version === 17) {
-      libs.push('react@^17.0.0', 'react-dom@^17.0.0');
+      libs.push('react:^17.0.0', 'react-dom:^17.0.0');
     }
   }
 
@@ -24,7 +24,7 @@ const getLibrary = (preset) => {
 };
 
 module.exports = (preset, registry) => {
-  const { language, library } = preset;
+  const { language, library, version } = preset;
 
   const eslint = require('./eslint/deps')(preset, registry);
   const stylelint = require('./stylelint/deps')(preset, registry);
@@ -35,24 +35,28 @@ module.exports = (preset, registry) => {
   const types =
     language === LANGUAGE.TYPESCRIPT
       ? [
-          '@types/node',
-          '@types/webpack-env', // typescript for webpack such as module.hot()
+          '@types/node:^16.7.2',
+          '@types/webpack-env:^1.16.2', // typescript for webpack such as module.hot()
         ]
       : [];
 
-  library === LANGUAGE.REACT &&
-    language === LANGUAGE.TYPESCRIPT &&
-    types.push('@types/react', '@types/react-dom');
+  if (library === LANGUAGE.REACT && language === LANGUAGE.TYPESCRIPT) {
+    if (version === 16) {
+      types.push('@types/react:^16.0.0', '@types/react-dom:^16.0.0');
+    } else if (version === 17) {
+      types.push('@types/react:^17.0.0', '@types/react-dom:^17.0.0');
+    }
+  }
 
   return {
     dependencies: getLibrary(preset),
     devDependencies: [
+      ...building,
       ...types,
       ...preCommit,
       ...eslint,
       ...stylelint,
       ...babel,
-      ...building,
     ],
   };
 };

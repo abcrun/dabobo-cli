@@ -5,7 +5,7 @@ const path = require('path');
 const pkg = require('../../templates/package.json');
 const { LANGUAGE, BUILDINGTOOL } = require('../util/constant');
 
-module.exports = (root, answer) => {
+module.exports = (root, answer, registry) => {
   const appName = path.basename(root);
   const { language, buildingTool } = answer;
 
@@ -34,6 +34,27 @@ module.exports = (root, answer) => {
       build: 'cousin-service build',
     };
   }
+
+  const { dependencies, devDependencies } = require('../dependencies')(
+    answer,
+    registry
+  );
+
+  const dep = {};
+  const devDep = {};
+
+  dependencies.forEach((d) => {
+    const [key, value] = d.split(':');
+    dep[key] = value;
+  });
+
+  devDependencies.forEach((d) => {
+    const [key, value] = d.split(':');
+    devDep[key] = value;
+  });
+
+  pkg.dependencies = dep;
+  pkg.devDependencies = devDep;
 
   fs.outputFile(
     path.resolve(root, 'package.json'),

@@ -21,44 +21,27 @@ function getPackageManager(options) {
   return packageManager;
 }
 
-function addDependencies(packageManager, answer, registry) {
-  const command = packageManager === 'npm' ? 'i' : 'add';
+function install(packageManager, registry) {
   const reg = registry ? [`--registry=${registry}`] : [];
 
   console.log();
   console.log(chalk.greenBright(`checking for dependencies...`));
 
-  const { dependencies, devDependencies } = require('./dependencies')(
-    answer,
-    registry
-  );
-
-  if (dependencies.length) {
-    console.log(chalk.greenBright(`Start to install the dependencies...`));
-    execa.sync(packageManager, [command, ...dependencies, '--silent', ...reg], {
-      stdio: 'inherit',
-    });
-    console.log();
-  }
-  console.log(chalk.greenBright(`Start to install the devDependencies...`));
-  execa.sync(
-    packageManager,
-    [command, ...devDependencies, '-D', '--silent', ...reg],
-    {
-      stdio: 'inherit',
-    }
-  );
+  execa.sync(packageManager, ['--reporter', 'silent', ...reg], {
+    stdio: 'inherit',
+  });
 }
 
 module.exports = (root, answer, options) => {
+  const registry = options.registry;
+
   const eslint = require('./eslint')(root, answer);
   const stylelint = require('./stylelint')(root, answer);
   const babel = require('./babel')(root, answer);
   const building = require('./build')(root, answer);
   const template = require('./config/template')(root, answer);
   const presetrc = require('./config/presetrc')(root, answer);
-  const pkg = require('./config/package')(root, answer);
-  const registry = options.registry;
+  const pkg = require('./config/package')(root, answer, registry);
 
   console.log();
   console.log(chalk.greenBright('Initializing the necessary files...'));
@@ -72,6 +55,6 @@ module.exports = (root, answer, options) => {
     building,
   ]).then(() => {
     const packageManager = getPackageManager(options);
-    addDependencies(packageManager, answer, registry);
+    install(packageManager, registry);
   });
 };

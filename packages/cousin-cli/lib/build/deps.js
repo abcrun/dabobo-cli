@@ -1,4 +1,3 @@
-const { getPkg } = require('../util');
 const { LIBRARY, BUILDINGTOOL, CSSPREPROCESSOR } = require('../util/constant');
 
 module.exports = (preset, registry) => {
@@ -6,33 +5,36 @@ module.exports = (preset, registry) => {
   const tools = [];
 
   if (buildingTool === BUILDINGTOOL.VUE) {
-    tools.push('@vue/cli-service@~4.5.0');
+    tools.push('@vue/cli-service:~4.5.0');
 
     // vue-service only for webpack4 - need related loaders
     if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
-      tools.push('less-loader@^5.0.0', 'less@^3.0.4');
+      tools.push('less-loader:^5.0.0', 'less:^3.0.4');
     } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
-      tools.push('sass-loader@^8.0.2', 'node-sass@^4.12.0');
+      tools.push('sass-loader:^8.0.2', 'node-sass:^4.12.0');
     } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
-      tools.push('stylus-loader@3.0.2', 'stylus@0.54.7');
+      tools.push('stylus-loader:3.0.2', 'stylus:0.54.7');
     }
   } else {
     if (buildingTool === BUILDINGTOOL.UMI) {
-      tools.push('umi');
+      tools.push('umi:^3.5.17');
     } else if (buildingTool === BUILDINGTOOL.REACT) {
-      tools.push('react-scripts');
+      tools.push('react-scripts:^4.0.3');
     } else {
-      tools.push('cousin-service');
+      tools.push('cousin-service:../cousin/packages/cousin-service');
     }
 
-    tools.push('postcss-loader'); // cousin-service include this module, but when intall cousin-service in the created project, this module will not be installed
-
     if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
-      tools.push(...getPkg('less-loader', registry, 'webpack'));
+      tools.push('less-loader:^10.0.1', 'less:^4.0.0');
     } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
-      tools.push(...getPkg('sass-loader', registry, 'webpack'));
+      tools.push(
+        'sass-loader:^12.1.0',
+        'sass:^1.3.0',
+        'node-sass:^6.0.0',
+        'fibers:>=3.1.0'
+      );
     } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
-      tools.push(...getPkg('stylus-loader', registry, 'webpack'));
+      tools.push('stylus-loader:6.1.0', 'stylus:>=0.52.4');
     }
   }
 
@@ -40,9 +42,9 @@ module.exports = (preset, registry) => {
     // tools.push('vue-loader', 'vue-loader-plugin');
 
     if (version === 2) {
-      tools.push('vue-template-compiler');
+      tools.push('vue-template-compiler:^2.6.14');
     } else if (version === 3) {
-      tools.push('@vue/compiler-sfc');
+      tools.push('@vue/compiler-sfc:^3.2.6');
     }
   }
 
