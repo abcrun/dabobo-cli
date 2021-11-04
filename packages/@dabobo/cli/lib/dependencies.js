@@ -20,7 +20,15 @@ const getLibrary = (preset) => {
     }
   }
 
-  if (useBoboRouter) libs.push('@dabobo/core:^0.1.0');
+  if (useBoboRouter) {
+    if (library === LIBRARY.VUE) {
+      libs.push('vue-router: ^4.0.12');
+    } else if (library === LIBRARY.VUE) {
+      libs.push('react-router: ^5.2.1');
+    }
+
+    libs.push('@dabobo/core:^0.1.0');
+  }
 
   return libs;
 };

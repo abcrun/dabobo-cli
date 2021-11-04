@@ -21,7 +21,9 @@ exports.isConflict = function (root, name, extraFiles = []) {
 
   if (conflicts.length > 0) {
     console.log(
-      `The directory ${chalk.green(name)} contains files that could conflict:`
+      chalk.bold(
+        `The directory ${chalk.green(name)} contains files that could conflict:`
+      )
     );
     console.log();
     for (const file of conflicts) {
@@ -38,7 +40,9 @@ exports.isConflict = function (root, name, extraFiles = []) {
     }
     console.log();
     console.log(
-      'Either try using a new directory name, or remove the files listed above.'
+      chalk.bold(
+        'Either try using a new directory name, or remove the files listed above.'
+      )
     );
 
     return true;

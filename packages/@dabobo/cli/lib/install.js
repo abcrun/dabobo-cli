@@ -3,7 +3,7 @@ const execa = require('execa');
 // const ora = require('ora');
 
 const command = {
-  yarn: ['add'],
+  yarn: [],
   npm: ['install', '--report'],
 };
 
@@ -25,14 +25,9 @@ async function install(packageManager, registry) {
   console.log();
 
   const cmd = command[packageManager];
+  if (registry) cmd.push('--registry', registry);
 
-  execa.sync(
-    packageManager,
-    [...cmd, registry || 'https://registry.npmjs.org'],
-    {
-      stdio: 'inherit',
-    }
-  );
+  execa.sync(packageManager, cmd, { stdio: 'inherit' });
 }
 
 module.exports = (root, answer, options) => {
@@ -47,7 +42,7 @@ module.exports = (root, answer, options) => {
   const pkg = require('./config/package')(root, answer, registry);
 
   console.log();
-  console.log(chalk.greenBright('Initializing the necessary files...'));
+  console.log(chalk.bold('Initializing the necessary files...'));
   Promise.all([
     ...template,
     presetrc,

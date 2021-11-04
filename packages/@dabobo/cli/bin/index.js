@@ -40,14 +40,11 @@ function checkNodeVersion(latest) {
 
 async function checkDaboboVersion(registry) {
   const spinner = ora(chalk.bold('Checking for the latest version...')).start();
+  const command = ['view', '@dabobo/cli', 'version'];
 
-  const { stdout } = await execa('npm', [
-    'view',
-    '@dabobo/cli',
-    'version',
-    '--registry',
-    registry || 'https://registry.npmjs.org',
-  ]);
+  if (registry) command.push('--registry', registry);
+
+  const { stdout } = await execa('npm', command);
 
   const latest = stdout.trim();
 
