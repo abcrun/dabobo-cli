@@ -1,0 +1,41 @@
+{
+  "name": "@dabobo/core",
+  "version": "0.1.0",
+  "description": "dabobo utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abcrun/dabobo-cli.git",
+    "directory": "packages/@dabobo/core"
+  },
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "author": "hrdesign@163.com",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "Front End Engineering Scaffold",
+    "Auto Generate Router",
+    "Router",
+    "Lint",
+    "Build",
+    "Webpack",
+    "React",
+    "Vue",
+    "Typescript",
+    "Less",
+    "Sass",
+    "Postcss",
+    "Stylus",
+    "CSS Modules",
+    "前端工程化脚手架",
+    "构建"
+  ],
+  "engines": {
+    "node": "^12.0.0 || >= 14.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/abcrun/dabobo-cli/issues"
+  }
+}

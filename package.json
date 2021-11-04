@@ -1,18 +1,17 @@
 {
-  "name": "cousin",
+  "name": "dabobo-cli",
   "scripts": {
     "lint": "eslint . --fix --ext .js,.json",
     "prettier": "prettier --write"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abcrun/cousin.git",
-    "directory": "packages/cousin-cli"
+    "url": "git+https://github.com/abcrun/dabobo-cli.git"
   },
   "author": "hrdesign@163.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/abcrun/cousin/issues"
+    "url": "https://github.com/abcrun/dabobo-cli/issues"
   },
   "husky": {
     "hooks": {
@@ -43,5 +42,8 @@
     "lint-staged": "^10.2.11",
     "prettier": "^2.3.2"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "global": "^4.4.0"
+  }
 }
