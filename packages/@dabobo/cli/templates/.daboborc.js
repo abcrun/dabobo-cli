@@ -5,7 +5,7 @@ module.exports = (mode) => {
 
   return {
     entry: '<%= entry %>',
-    publicPath: '',
+    publicPath: '/',
     library: 'Library',
     libraryTarget: 'umd',
     libraryExport: 'default',

@@ -16,7 +16,7 @@ module.exports = (mode, env, commandEntry) => {
   const { cssPreProcessor, library: lib } = presetrc;
   const {
     entry: boboEntry,
-    publicPath = '',
+    publicPath = '/',
     js: jsOptions = {},
     css: cssOptions = {},
     assets: assetsOptions = {},
@@ -49,7 +49,6 @@ module.exports = (mode, env, commandEntry) => {
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
       filename: 'index.html',
-      publicPath: '/',
     }),
     ...css.plugins,
     ...file.plugins,
@@ -65,6 +64,7 @@ module.exports = (mode, env, commandEntry) => {
     entry: formatEntry,
     output: {
       path: path.resolve('./dist'),
+      publicPath,
       filename: filename + '.js',
       chunkFilename: chunkFilename + '.js',
       library,

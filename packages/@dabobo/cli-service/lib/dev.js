@@ -26,6 +26,9 @@ module.exports = (entry, options) => {
       onBeforeSetupMiddleware: (devServer) => {
         apiMocker(devServer.app, path.resolve('./mock/index.js'));
       },
+      static: {
+        publicPath: '/',
+      },
       ...devServer,
     },
     complier
