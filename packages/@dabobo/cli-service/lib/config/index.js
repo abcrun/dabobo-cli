@@ -49,6 +49,7 @@ module.exports = (mode, env, commandEntry) => {
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
       filename: 'index.html',
+      publicPath: '/',
     }),
     ...css.plugins,
     ...file.plugins,

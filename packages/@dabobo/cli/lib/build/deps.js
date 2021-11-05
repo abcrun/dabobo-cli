@@ -11,7 +11,7 @@ module.exports = (preset, registry) => {
     if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
       tools.push('less-loader:^5.0.0', 'less:^3.0.4');
     } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
-      tools.push('sass-loader:^8.0.2', 'node-sass:^4.12.0');
+      tools.push('sass-loader:^8.0.2', 'sass:^1.26.5');
     } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
       tools.push('stylus-loader:3.0.2', 'stylus:0.54.7');
     }
@@ -29,9 +29,9 @@ module.exports = (preset, registry) => {
     } else if (cssPreProcessor === CSSPREPROCESSOR.SASS) {
       tools.push(
         'sass-loader:^12.1.0',
-        'sass:^1.3.0',
-        'node-sass:^6.0.0',
-        'fibers:>=3.1.0'
+        'sass:^1.3.0'
+        // 'node-sass:^6.0.0',
+        // 'fibers:>=3.1.0'
       );
     } else if (cssPreProcessor === CSSPREPROCESSOR.STYLUS) {
       tools.push('stylus-loader:6.1.0', 'stylus:>=0.52.4');

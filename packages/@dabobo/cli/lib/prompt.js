@@ -67,7 +67,7 @@ module.exports = [
     default: 0,
     choices: [
       { name: 'less', value: 'less' },
-      { name: 'sass/scss(node-sass)', value: 'sass' },
+      { name: 'sass/scss(dart-sass)', value: 'sass' },
       { name: 'stylus', value: 'stylus' },
       { name: 'No pre-processor', value: 'noprocessor' },
     ],
@@ -81,7 +81,7 @@ module.exports = [
   {
     type: 'confirm',
     name: 'useBoboRouter',
-    message: 'Generate routerMap with @dabobo/core?',
+    message: 'Automatic generate routerMap with @dabobo/core?',
     when: function (answers) {
       return answers.library !== LIBRARY.EMPTY;
     },
