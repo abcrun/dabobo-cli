@@ -34,7 +34,7 @@ module.exports = (mode, env, commandEntry) => {
   const { filename = defaultName, chunkFilename = defaultName } = jsOptions;
 
   const css = require('./css')(cssPreProcessor, cssOptions, mode);
-  const file = require('./file')(lib, jsOptions, mode);
+  const file = require('./js')(lib, jsOptions, mode);
   const assets = require('./assets')(assetsOptions, mode);
   const entry = commandEntry || boboEntry;
 

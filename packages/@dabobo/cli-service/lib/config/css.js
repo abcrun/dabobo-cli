@@ -24,7 +24,7 @@ module.exports = (cssPreProcessor, options, mode) => {
       loader: 'postcss-loader',
       options: {
         postcssOptions: {
-          // plugins: [require('postcss-preset-env')()],
+          plugins: [require('postcss-preset-env')()],
         },
       },
     },

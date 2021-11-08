@@ -2,7 +2,7 @@ const { LIBRARY, BUILDINGTOOL, CSSPREPROCESSOR } = require('../util/constant');
 
 module.exports = (preset, registry) => {
   const { library, version, buildingTool, cssPreProcessor } = preset;
-  const tools = [];
+  const tools = ['postcss-loader:^6.1.1'];
 
   if (buildingTool === BUILDINGTOOL.VUE) {
     tools.push('@vue/cli-service:~4.5.0');

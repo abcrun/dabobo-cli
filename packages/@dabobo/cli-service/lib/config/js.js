@@ -1,11 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+// const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { LIBRARY } = require('../constant');
 
 module.exports = (library, options, mode) => {
   const fInclude = [path.resolve('.')];
-  const fExclude = [path.resolve('./node_modules')];
+  const fExclude = [
+    path.resolve('./node_modules'),
+    path.resolve('./bower_components'),
+  ];
   const { include = fInclude, exclude = fExclude } = options;
 
   const rules = [
