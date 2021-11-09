@@ -20,14 +20,7 @@ module.exports = (cssPreProcessor, options, mode) => {
       loader: 'css-loader',
       options: { modules },
     },
-    {
-      loader: 'postcss-loader',
-      options: {
-        postcssOptions: {
-          plugins: [require('postcss-preset-env')()],
-        },
-      },
-    },
+    'postcss-loader',
   ];
 
   if (cssPreProcessor === CSSPREPROCESSOR.LESS) {

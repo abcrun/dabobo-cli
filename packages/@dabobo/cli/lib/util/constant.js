@@ -20,9 +20,7 @@ module.exports = {
     NOPROCESSOR: 'noprocessor',
   },
   BUILDINGTOOL: {
-    VUE: 'vue',
-    REACT: 'react',
-    UMI: 'umi',
+    EMPTY: 'empty',
     DABOBO: 'dabobo',
   },
 };

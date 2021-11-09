@@ -35,11 +35,10 @@ module.exports = (root, answer, options) => {
 
   const eslint = require('./eslint')(root, answer);
   const stylelint = require('./stylelint')(root, answer);
-  const babel = require('./babel')(root, answer);
-  const building = require('./build')(root, answer);
   const template = require('./config/template')(root, answer);
   const presetrc = require('./config/presetrc')(root, answer);
   const pkg = require('./config/package')(root, answer, registry);
+  const building = require('./build')(root, answer);
 
   console.log();
   console.log(chalk.bold('Initializing the necessary files...'));
@@ -48,9 +47,8 @@ module.exports = (root, answer, options) => {
     presetrc,
     eslint,
     stylelint,
-    babel,
     pkg,
-    building,
+    ...building,
   ]).then(() => {
     const packageManager = getPackageManager(options);
     install(packageManager, registry);

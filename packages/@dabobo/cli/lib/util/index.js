@@ -13,6 +13,7 @@ exports.isConflict = function (root, name, extraFiles = []) {
     '.stylelintrc.json',
     'commitlint.config.js',
     'babel.config.json',
+    'postcss.config.js',
     '.daboborc.js',
     '.env',
     '.browserslistrc',

@@ -13,7 +13,7 @@ const envs = fs.readJsonSync(path.resolve('./.env'));
 const presetrc = fs.readJsonSync(path.resolve('./.presetrc'));
 
 module.exports = (mode, env, commandEntry) => {
-  const { cssPreProcessor, library: lib } = presetrc;
+  const { cssPreProcessor, library: lib, version } = presetrc;
   const {
     entry: boboEntry,
     publicPath = '/',
@@ -34,7 +34,7 @@ module.exports = (mode, env, commandEntry) => {
   const { filename = defaultName, chunkFilename = defaultName } = jsOptions;
 
   const css = require('./css')(cssPreProcessor, cssOptions, mode);
-  const file = require('./js')(lib, jsOptions, mode);
+  const file = require('./js')({ library: lib, version }, jsOptions, mode);
   const assets = require('./assets')(assetsOptions, mode);
   const entry = commandEntry || boboEntry;
 

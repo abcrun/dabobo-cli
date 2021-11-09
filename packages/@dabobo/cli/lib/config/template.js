@@ -5,6 +5,7 @@ const { LANGUAGE, BUILDINGTOOL } = require('../util/constant');
 module.exports = (root, answer) => {
   const { language, buildingTool } = answer;
   const files = [
+    './public/index.html',
     '.eslintignore',
     '.prettierrc',
     '.prettierignore',
@@ -12,11 +13,6 @@ module.exports = (root, answer) => {
     'commitlint.config.js',
     '.ignore',
   ];
-
-  // umi don't need public/index.html
-  if (buildingTool !== BUILDINGTOOL.UMI) {
-    files.push('./public/index.html');
-  }
 
   if (language === LANGUAGE.TYPESCRIPT)
     files.push('assets.d.ts', 'tsconfig.json');

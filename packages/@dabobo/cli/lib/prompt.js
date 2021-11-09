@@ -63,7 +63,7 @@ module.exports = [
     type: 'list',
     name: 'cssPreProcessor',
     message:
-      'Pick a CSS pre-processor(PostCSS, Autoprefix and CSS Modules are supported by default)',
+      'Pick a CSS pre-processor(PostCSS and CSS Modules are supported by default)',
     default: 0,
     choices: [
       { name: 'less', value: 'less' },
@@ -81,7 +81,7 @@ module.exports = [
   {
     type: 'confirm',
     name: 'useBoboRouter',
-    message: 'Automatic generate routerMap with @dabobo/core?',
+    message: 'Generate routerMap with @dabobo/core?',
     when: function (answers) {
       return answers.library !== LIBRARY.EMPTY;
     },
@@ -90,28 +90,14 @@ module.exports = [
   {
     type: 'list',
     name: 'buildingTool',
-    message: 'Choose a Building tool',
+    message: 'Choose a Building tool?',
     default: 'dabobo',
-    when: function (answers) {
-      return answers.library === LIBRARY.VUE;
-    },
     choices: [
-      { name: 'dabobo-cli-service(default)', value: 'dabobo' },
-      { name: 'vue-cli-service', value: 'vue' },
-    ],
-  },
-  {
-    type: 'list',
-    name: 'buildingTool',
-    message: 'Choose a Building tool',
-    default: 'dabobo',
-    when: function (answers) {
-      return answers.library === LIBRARY.REACT;
-    },
-    choices: [
-      { name: 'dabobo-cli-service(default)', value: 'dabobo' },
-      { name: 'react-scripts', value: 'react' },
-      { name: 'umi', value: 'umi' },
+      {
+        name: 'dabobo-cli-service(@dabobo/cli-service)',
+        value: 'dabobo',
+      },
+      { name: 'No tools(Configure Manually)', value: 'empty' },
     ],
   },
 ];

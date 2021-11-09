@@ -22,7 +22,11 @@ const getLibrary = (preset) => {
 
   if (useBoboRouter) {
     if (library === LIBRARY.VUE) {
-      libs.push('vue-router: ^4.0.12');
+      if (version === 2) {
+        libs.push('vue-router: ^3.5.3');
+      } else if (version === 3) {
+        libs.push('vue-router: ^4.0.12');
+      }
     } else if (library === LIBRARY.VUE) {
       libs.push('react-router: ^5.2.1');
     }
@@ -38,7 +42,6 @@ module.exports = (preset, registry) => {
 
   const eslint = require('./eslint/deps')(preset, registry);
   const stylelint = require('./stylelint/deps')(preset, registry);
-  const babel = require('./babel/deps')(preset, registry);
   const building = require('./build/deps')(preset, registry);
 
   const preCommit = ['husky', 'lint-staged'];
@@ -66,7 +69,6 @@ module.exports = (preset, registry) => {
       ...preCommit,
       ...eslint,
       ...stylelint,
-      ...babel,
     ],
   };
 };
