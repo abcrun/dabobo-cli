@@ -2,14 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 const { LIBRARY } = require('../constant');
 
-module.exports = (preset, options, mode) => {
-  const fInclude = [path.resolve('.')];
-  const fExclude = [
+module.exports = (preset, mode) => {
+  const include = [path.resolve('.')];
+  const exclude = [
     path.resolve('./node_modules'),
     path.resolve('./bower_components'),
   ];
   const { library, version } = preset;
-  const { include = fInclude, exclude = fExclude } = options;
 
   const rules = [
     {

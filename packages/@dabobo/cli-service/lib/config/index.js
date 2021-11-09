@@ -9,107 +9,115 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { LIBRARY } = require('../constant');
 
 const dabobo = require(path.resolve('./.daboborc.js'));
-const envs = fs.readJsonSync(path.resolve('./.env'));
+const envs = fs.readJsonSync(path.resolve('./.env')) || {};
 const presetrc = fs.readJsonSync(path.resolve('./.presetrc'));
 
 module.exports = (mode, env, commandEntry) => {
-  const { cssPreProcessor, library: lib, version } = presetrc;
-  const {
+  const { cssPreProcessor, library } = presetrc;
+
+  let {
     entry: boboEntry,
-    publicPath = '/',
-    js: jsOptions = {},
-    css: cssOptions = {},
-    assets: assetsOptions = {},
-    library = 'libraryName',
-    libraryTarget = 'umd',
-    libraryExport = 'default',
-    externals = {},
-    noParse = '',
-    alias = {},
-    optimization = {},
-    plugins: extraPlugins = [],
+    output = {},
+    cssModules = true,
+    optimization,
+    plugins = [],
+    externals,
+    noParse,
+    alias,
   } = dabobo(mode);
 
-  const defaultName = '[name].[hash:8]';
-  const { filename = defaultName, chunkFilename = defaultName } = jsOptions;
-
-  const css = require('./css')(cssPreProcessor, cssOptions, mode);
-  const file = require('./js')({ library: lib, version }, jsOptions, mode);
-  const assets = require('./assets')(assetsOptions, mode);
+  // for entry
   const entry = commandEntry || boboEntry;
-
-  // 处理entry
   const formatEntry = (entry instanceof Array ? entry : [entry]).map((url) => {
     return path.resolve(url);
   });
-  if (lib === LIBRARY.REACT) formatEntry.unshift('react-hot-loader/patch');
+  if (library === LIBRARY.REACT) formatEntry.unshift('react-hot-loader/patch');
 
-  // 处理plugins
-  const plugins = [
+  // for output
+  output = {
+    path: path.resolve('./dist'),
+    publicPath: '/',
+    filename: 'assets/[name].[contenthash:4].js',
+    chunkFilename: 'assets/[name].[contenthash:4].chunk.js',
+    ...output,
+  };
+
+  // for plugins
+  const css = require('./css')(cssPreProcessor, cssModules, mode);
+  const file = require('./js')(presetrc, mode);
+  const assets = require('./assets')();
+  const module = {
+    rules: [...css.rules, ...file.rules, ...assets.rules],
+  };
+
+  plugins = [
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
       filename: 'index.html',
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(mode),
+        ENV: JSON.stringify(envs[env]),
+      },
+    }),
     ...css.plugins,
     ...file.plugins,
-    ...extraPlugins,
+    ...plugins,
   ];
 
-  const envDatas = env && envs[env];
-  if (envDatas) {
-    plugins.push(new webpack.DefinePlugin({ ENV: JSON.stringify(envDatas) }));
-  }
+  if (noParse) module.noParse = noParse;
 
-  const config = {
-    entry: formatEntry,
-    output: {
-      path: path.resolve('./dist'),
-      publicPath,
-      filename: filename + '.js',
-      chunkFilename: chunkFilename + '.js',
-      library,
-      libraryTarget,
-      libraryExport,
+  // config file
+  alias = alias || { '@': path.resolve(__dirname, './src') };
+  optimization = optimization || {
+    runtimeChunk: true,
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          priority: 1,
+          chunks: 'initial',
+          name: 'vendor',
+          test: /node_modules/,
+          minChunks: 1,
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+        },
+      },
     },
+  };
+  const config = {
+    mode,
+    target: 'web',
+    entry: formatEntry,
+    output,
     resolve: {
       mainFields: ['jsnext:main', 'browser', 'main'],
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
-      alias: alias,
+      alias,
     },
     optimization,
     module: {
       rules: [...css.rules, ...file.rules, ...assets.rules],
     },
     plugins,
-    target: 'web',
-    externals: externals,
+    externals,
   };
 
   // 其他相关基础配置
   if (mode === 'development') {
-    config.devtool = 'cheap-module-source-map';
-    config.mode = 'development';
+    config.devtool = 'eval-source-map';
     config.output.pathinfo = true;
-    // 控制台信息
-    config.stats = {
-      assets: true,
-      colors: true,
-      errors: true,
-      errorDetails: true,
-      hash: true,
-    };
   } else {
-    config.mode = 'production';
-    config.output.publicPath = publicPath;
     config.plugins.unshift(new CleanWebpackPlugin());
     config.optimization.minimizer = [
       new TerserPlugin(),
       new CssMinimizerPlugin(),
     ];
   }
-
-  if (!/^\s*$/.test(noParse) || noParse.length > 0)
-    config.module.noParse = noParse;
 
   return config;
 };

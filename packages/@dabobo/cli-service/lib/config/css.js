@@ -1,13 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CSSPREPROCESSOR } = require('../constant');
 
-module.exports = (cssPreProcessor, options, mode) => {
-  const defaultName = '[name].[contenthash:8]';
-  const {
-    filename = defaultName,
-    chunkFilename = defaultName,
-    modules,
-  } = options;
+module.exports = (cssPreProcessor, modules, mode) => {
   const rules = [];
   const plugins = [];
 
@@ -74,8 +68,8 @@ module.exports = (cssPreProcessor, options, mode) => {
   if (mode === 'production') {
     plugins.push(
       new MiniCssExtractPlugin({
-        filename: `${filename}.css`,
-        chunkFilename: `${chunkFilename}.css`,
+        filename: 'assets/css/[name].[contenthash:4].css',
+        chunkFilename: `assets/css/[name].[contenthash:4].chunk.css`,
       })
     );
   }
