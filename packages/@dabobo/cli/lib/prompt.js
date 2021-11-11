@@ -62,8 +62,7 @@ module.exports = [
   {
     type: 'list',
     name: 'cssPreProcessor',
-    message:
-      'Pick a CSS pre-processor(PostCSS and CSS Modules are supported by default)',
+    message: 'Pick a CSS pre-processor(PostCSS is supported by default)',
     default: 0,
     choices: [
       { name: 'less', value: 'less' },
@@ -81,7 +80,7 @@ module.exports = [
   {
     type: 'confirm',
     name: 'useBoboRouter',
-    message: 'Generate routerMap with @dabobo/core?',
+    message: 'Generate routerMap with @dabobo/utils?',
     when: function (answers) {
       return answers.library !== LIBRARY.EMPTY;
     },

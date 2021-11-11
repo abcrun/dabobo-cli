@@ -18,7 +18,6 @@ module.exports = (entry, options) => {
   const server = new WebpackDevServer(
     {
       historyApiFallback: true,
-      hot: true,
       port: port || 8000,
       compress: true, // gzip
       proxy,

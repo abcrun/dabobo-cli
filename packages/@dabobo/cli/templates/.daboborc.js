@@ -24,7 +24,7 @@ module.exports = (mode) => {
     output: {
       publicPath: '/',
     },
-    cssModules: true,
+    cssModules: false,
     devServer: {
       port: 8000,
     },

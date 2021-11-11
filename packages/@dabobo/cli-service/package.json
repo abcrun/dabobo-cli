@@ -1,6 +1,6 @@
 {
   "name": "@dabobo/cli-service",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
   "bin": {
@@ -52,10 +52,6 @@
     "thread-loader": "^3.0.4",
     "webpack": "^5.0.0",
     "webpack-dev-server": "^4.0.0"
-  },
-  "peerDependenciesMeta": {
-    "postcss": "^8.0.1",
-    "postcss-loader": "^6.1.1"
   },
   "peerDependenciesMeta": {
     "vue-template-compiler": {

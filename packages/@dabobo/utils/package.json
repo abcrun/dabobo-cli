@@ -1,6 +1,6 @@
 {
-  "name": "@dabobo/core",
-  "version": "0.1.3",
+  "name": "@dabobo/utils",
+  "version": "0.1.0",
   "description": "dabobo utils",
   "repository": {
     "type": "git",

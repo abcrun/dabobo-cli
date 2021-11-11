@@ -11,6 +11,7 @@ module.exports = (preset, registry) => {
   const babels = [
     // '@babel/preset-env',
     // '@babel/plugin-transform-runtime',
+    // '@babel/plugin-transform-modules-commonjs', // for commonjs library
     // '@babel/plugin-proposal-class-properties', // This plugin is included in @babel/preset-env, in ES2022
     // '@babel/plugin-proposal-object-rest-spread', // This plugin is included in @babel/preset-env, in ES2018
     // '@babel/plugin-proposal-decorators',

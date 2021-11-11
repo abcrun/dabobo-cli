@@ -18,7 +18,7 @@ module.exports = (mode, env, commandEntry) => {
   let {
     entry: boboEntry,
     output = {},
-    cssModules = true,
+    cssModules = false,
     optimization,
     plugins = [],
     externals,
@@ -37,24 +37,21 @@ module.exports = (mode, env, commandEntry) => {
   output = {
     path: path.resolve('./dist'),
     publicPath: '/',
-    filename: 'assets/[name].[contenthash:4].js',
-    chunkFilename: 'assets/[name].[contenthash:4].chunk.js',
+    filename: 'assets/js/[name].[contenthash].js',
+    chunkFilename: 'assets/js/chunk/[contenthash].js',
     ...output,
   };
 
-  // for plugins
+  // for modules and plugins
   const css = require('./css')(cssPreProcessor, cssModules, mode);
   const file = require('./js')(presetrc, mode);
   const assets = require('./assets')();
   const module = {
     rules: [...css.rules, ...file.rules, ...assets.rules],
   };
+  if (noParse) module.noParse = noParse;
 
   plugins = [
-    new HtmlWebpackPlugin({
-      template: path.resolve('./public/index.html'),
-      filename: 'index.html',
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
@@ -64,9 +61,11 @@ module.exports = (mode, env, commandEntry) => {
     ...css.plugins,
     ...file.plugins,
     ...plugins,
+    new HtmlWebpackPlugin({
+      template: path.resolve('./public/index.html'),
+      filename: 'index.html',
+    }),
   ];
-
-  if (noParse) module.noParse = noParse;
 
   // config file
   alias = alias || { '@': path.resolve(__dirname, './src') };
@@ -95,8 +94,8 @@ module.exports = (mode, env, commandEntry) => {
     entry: formatEntry,
     output,
     resolve: {
-      mainFields: ['jsnext:main', 'browser', 'main'],
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
+      mainFields: ['jsnext:main', 'main', 'browser'],
+      extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
       alias,
     },
     optimization,
@@ -105,6 +104,7 @@ module.exports = (mode, env, commandEntry) => {
     },
     plugins,
     externals,
+    stats: 'errors-only',
   };
 
   // 其他相关基础配置

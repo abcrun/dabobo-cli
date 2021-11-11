@@ -6,7 +6,11 @@ function recurveRouter(children, router) {
     result.children = result.children || [];
     recurveRouter(result.children, router);
   } else {
-    children.push(router);
+    if (/\*$/.test(path)) {
+      children.push(router);
+    } else {
+      children.unshift(router);
+    }
   }
 }
 
@@ -16,18 +20,24 @@ export default function createRouterMap(context) {
 
   context.keys().forEach((key) => {
     let path = key.substring(1).replace(/\.[^/.]*$/, '');
+    const isIndex = /index$/i.test(path);
     const isLayout = /__layout$/i.test(path);
-    const module = context(key);
 
     const router = {
       path,
-      component: module.default || module,
+      component: (resolve) => context(key).then(resolve),
     };
+
+    if (isIndex) {
+      path = path.replace(/\/index.*$/, '') || '/';
+      router.path = path;
+    }
 
     if (isLayout) {
       path = path.replace(/\/__layout.*$/, '') || '/';
       router.path = path;
     }
+
     map[path] = router;
   });
 
