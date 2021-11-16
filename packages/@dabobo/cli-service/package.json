@@ -1,6 +1,6 @@
 {
   "name": "@dabobo/cli-service",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
   "bin": {
@@ -38,6 +38,7 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/runtime-corejs3": "^7.15.3",
+    "@soda/friendly-errors-webpack-plugin": "^1.8.1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "core-js": "^3.16.2",

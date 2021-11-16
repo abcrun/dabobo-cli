@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 
 const { LIBRARY } = require('../constant');
 
@@ -15,15 +16,17 @@ const presetrc = fs.readJsonSync(path.resolve('./.presetrc'));
 module.exports = (mode, env, commandEntry) => {
   const { cssPreProcessor, library } = presetrc;
 
-  let {
+  const {
     entry: boboEntry,
-    output = {},
-    cssModules = false,
-    optimization,
-    plugins = [],
+    output: boboOutput = {},
+    cssModules = true,
+    optimization: boboOptimization,
     externals,
     noParse,
-    alias,
+    resolve: fnResolve,
+    rules: fnRules,
+    plugins: fnPlugins,
+    devServer = {},
   } = dabobo(mode);
 
   // for entry
@@ -34,24 +37,46 @@ module.exports = (mode, env, commandEntry) => {
   if (library === LIBRARY.REACT) formatEntry.unshift('react-hot-loader/patch');
 
   // for output
-  output = {
+  const output = {
     path: path.resolve('./dist'),
     publicPath: '/',
-    filename: 'assets/js/[name].[contenthash].js',
-    chunkFilename: 'assets/js/chunk/[contenthash].js',
-    ...output,
+    filename: 'assets/js/[name].[contenthash:8].js',
+    chunkFilename: 'assets/js/chunk/[name].[contenthash:8].js',
+    ...boboOutput,
   };
 
-  // for modules and plugins
+  // for resolve
+  const resolveConfig = {};
+  const resolve =
+    typeof fnResolve === 'function'
+      ? fnResolve(resolveConfig, mode, env)
+      : resolveConfig;
+
   const css = require('./css')(cssPreProcessor, cssModules, mode);
   const file = require('./js')(presetrc, mode);
   const assets = require('./assets')();
+
+  // for module
+  const rulesConfig = [...css.rules, ...file.rules, ...assets.rules];
   const module = {
-    rules: [...css.rules, ...file.rules, ...assets.rules],
+    rules:
+      typeof fnRules === 'function'
+        ? fnRules(rulesConfig, mode, env)
+        : rulesConfig,
   };
   if (noParse) module.noParse = noParse;
 
-  plugins = [
+  // for plugins
+  const pluginsConfig = [
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [
+          `You application is running at: http://localhost:${
+            devServer.port || 8080
+          }`,
+        ],
+      },
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
@@ -60,16 +85,18 @@ module.exports = (mode, env, commandEntry) => {
     }),
     ...css.plugins,
     ...file.plugins,
-    ...plugins,
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
       filename: 'index.html',
     }),
   ];
+  const plugins =
+    typeof fnPlugins === 'function'
+      ? fnPlugins(pluginsConfig, mode, env)
+      : pluginsConfig;
 
-  // config file
-  alias = alias || { '@': path.resolve(__dirname, './src') };
-  optimization = optimization || {
+  // for optimization
+  const optimization = boboOptimization || {
     runtimeChunk: true,
     splitChunks: {
       chunks: 'all',
@@ -88,20 +115,16 @@ module.exports = (mode, env, commandEntry) => {
       },
     },
   };
+
+  // config file
   const config = {
     mode,
     target: 'web',
     entry: formatEntry,
     output,
-    resolve: {
-      mainFields: ['jsnext:main', 'main', 'browser'],
-      extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
-      alias,
-    },
+    resolve,
     optimization,
-    module: {
-      rules: [...css.rules, ...file.rules, ...assets.rules],
-    },
+    module,
     plugins,
     externals,
     stats: 'errors-only',

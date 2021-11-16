@@ -1,7 +1,7 @@
 module.exports = () => {
   // webpack5 includes file-loader url-loader raw-loader default
   const generator = {
-    filename: 'assets/resource/[contenthash:4][ext]',
+    filename: 'assets/resource/[name].[contenthash:8][ext]',
   };
 
   const rules = [
@@ -10,7 +10,7 @@ module.exports = () => {
       type: 'asset',
       generator: {
         filename: () => {
-          return 'assets/images/[contenthash:4][ext]';
+          return 'assets/images/[name].[contenthash:8][ext]';
         },
       },
     },

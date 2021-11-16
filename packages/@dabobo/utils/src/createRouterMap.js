@@ -14,18 +14,21 @@ function recurveRouter(children, router) {
   }
 }
 
-export default function createRouterMap(context) {
+export default function createRouterMap(context, exclude) {
   const map = {};
   const routers = [];
+  const reg = exclude || /\/components?\//i;
 
   context.keys().forEach((key) => {
     let path = key.substring(1).replace(/\.[^/.]*$/, '');
     const isIndex = /index$/i.test(path);
     const isLayout = /__layout$/i.test(path);
+    const module = context(key);
 
     const router = {
       path,
-      component: (resolve) => context(key).then(resolve),
+      component:
+        typeof module === 'function' ? () => module : module.default || module,
     };
 
     if (isIndex) {
@@ -38,7 +41,9 @@ export default function createRouterMap(context) {
       router.path = path;
     }
 
-    map[path] = router;
+    if (!reg.test(path)) {
+      map[path] = router;
+    }
   });
 
   Object.keys(map).forEach((key) => {

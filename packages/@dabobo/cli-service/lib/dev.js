@@ -2,23 +2,20 @@ const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
-const dabobo = require(path.resolve('./.daboborc.js'))('development');
 const apiMocker = require('mocker-api');
 const proxy = require(path.resolve('./proxy/index.js'));
 
-const { devServer = {} } = dabobo;
-
 module.exports = (entry, options) => {
-  const { env = 'development', port, open = false } = options;
-  port && (devServer.port = port);
-  open && (devServer.open = true);
+  const { env = 'local' } = options;
+  const dabobo = require(path.resolve('./.daboborc.js'))('development', env);
+  const { devServer = {} } = dabobo;
 
   const config = require('./config')('development', env, entry);
   const complier = webpack(config);
   const server = new WebpackDevServer(
     {
       historyApiFallback: true,
-      port: port || 8000,
+      port: 8080,
       compress: true, // gzip
       proxy,
       onBeforeSetupMiddleware: (devServer) => {

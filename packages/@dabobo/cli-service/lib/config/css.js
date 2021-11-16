@@ -68,8 +68,8 @@ module.exports = (cssPreProcessor, modules, mode) => {
   if (mode === 'production') {
     plugins.push(
       new MiniCssExtractPlugin({
-        filename: 'assets/css/[name].[contenthash:4].css',
-        chunkFilename: `assets/css/[name].[contenthash:4].chunk.css`,
+        filename: 'assets/css/[name].[contenthash:8].css',
+        chunkFilename: `assets/css/chunk/[name].[contenthash:8].css`,
       })
     );
   }
