@@ -46,7 +46,11 @@ module.exports = (mode, env, commandEntry) => {
   };
 
   // for resolve
-  const resolveConfig = {};
+  const resolveConfig = {
+    mainFields: ['browser', 'module', 'main'],
+    mainFiles: ['index'],
+    extensions: ['.vue', '.js', '.json', '.mjs', '.jsx', '.ts', '.tsx'],
+  };
   const resolve =
     typeof fnResolve === 'function'
       ? fnResolve(resolveConfig, mode, env)

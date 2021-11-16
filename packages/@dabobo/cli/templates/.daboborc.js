@@ -27,7 +27,7 @@ module.exports = (mode, env) => {
     },
     cssModules: false,
     devServer: {
-      port: 8000,
+      port: 8080,
     },
     resolve: (defaultResolve, mode, env) => {
       return {
