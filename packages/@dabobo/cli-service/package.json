@@ -1,6 +1,6 @@
 {
   "name": "@dabobo/cli-service",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "A Front-End Engineering Scaffold For Building",
   "main": "index.js",
   "bin": {
@@ -41,6 +41,7 @@
     "@soda/friendly-errors-webpack-plugin": "^1.8.1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^9.1.0",
     "core-js": "^3.16.2",
     "css-loader": "^6.2.0",
     "css-minimizer-webpack-plugin": "^3.0.2",

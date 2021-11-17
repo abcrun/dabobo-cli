@@ -1,4 +1,6 @@
 const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (mode, env) => {
   /*
@@ -36,6 +38,27 @@ module.exports = (mode, env) => {
           '@': resolve('./src'),
         },
       };
+    },
+    plugins: (defaultResolve, mode, env) => {
+      return [
+        ...defaultPlugins,
+        new CopyPlugin({
+          patterns: [
+            {
+              context: resolve('./public'),
+              from: '*/**',
+              to: './',
+              globOptions: {
+                ignore: ['.*', './index.html'],
+              },
+            },
+          ],
+        }),
+        new HtmlWebpackPlugin({
+          template: resolve('./public/index.html'),
+          filename: 'index.html',
+        }),
+      ];
     },
   };
 };

@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
@@ -49,7 +48,7 @@ module.exports = (mode, env, commandEntry) => {
   const resolveConfig = {
     mainFields: ['browser', 'module', 'main'],
     mainFiles: ['index'],
-    extensions: ['.vue', '.js', '.json', '.mjs', '.jsx', '.ts', '.tsx'],
+    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.wasm', '.json'],
   };
   const resolve =
     typeof fnResolve === 'function'
@@ -72,27 +71,14 @@ module.exports = (mode, env, commandEntry) => {
 
   // for plugins
   const pluginsConfig = [
-    new FriendlyErrorsWebpackPlugin({
-      compilationSuccessInfo: {
-        messages: [
-          `You application is running at: http://localhost:${
-            devServer.port || 8080
-          }`,
-        ],
-      },
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
-        ENV: JSON.stringify(envs[env]),
+        VARS: JSON.stringify(envs[env]),
       },
     }),
     ...css.plugins,
     ...file.plugins,
-    new HtmlWebpackPlugin({
-      template: path.resolve('./public/index.html'),
-      filename: 'index.html',
-    }),
   ];
   const plugins =
     typeof fnPlugins === 'function'
@@ -138,7 +124,22 @@ module.exports = (mode, env, commandEntry) => {
   if (mode === 'development') {
     config.devtool = 'eval-source-map';
     config.output.pathinfo = true;
+    config.plugins.push(
+      new FriendlyErrorsWebpackPlugin({
+        compilationSuccessInfo: {
+          messages: [
+            `You application is running at: http://localhost:${
+              devServer.port || 8080
+            }`,
+          ],
+        },
+      })
+    );
   } else {
+    config.performance = {
+      maxEntrypointSize: 3000000,
+      maxAssetSize: 10000000,
+    };
     config.plugins.unshift(new CleanWebpackPlugin());
     config.optimization.minimizer = [
       new TerserPlugin(),

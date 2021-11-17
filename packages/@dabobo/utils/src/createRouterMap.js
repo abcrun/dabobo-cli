@@ -27,8 +27,7 @@ export default function createRouterMap(context, exclude) {
 
     const router = {
       path,
-      component:
-        typeof module === 'function' ? () => module : module.default || module,
+      component: module.default || (() => module),
     };
 
     if (isIndex) {
