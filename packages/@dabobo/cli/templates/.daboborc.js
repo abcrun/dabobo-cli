@@ -39,17 +39,16 @@ module.exports = (mode, env) => {
         },
       };
     },
-    plugins: (defaultResolve, mode, env) => {
+    plugins: (defaultPlugins, mode, env) => {
       return [
         ...defaultPlugins,
         new CopyPlugin({
           patterns: [
             {
-              context: resolve('./public'),
-              from: '*/**',
-              to: './',
+              from: resolve(__dirname, './public'),
+              to: resolve(__dirname, './dist'),
               globOptions: {
-                ignore: ['.*', './index.html'],
+                ignore: ['.*', resolve(__dirname, './public/index.html')],
               },
             },
           ],

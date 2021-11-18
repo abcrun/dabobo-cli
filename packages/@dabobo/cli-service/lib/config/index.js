@@ -43,6 +43,7 @@ module.exports = (mode, env, commandEntry) => {
     chunkFilename: 'assets/js/chunk/[name].[contenthash:8].js',
     ...boboOutput,
   };
+  if (mode === 'development') output.publicPath = '/';
 
   // for resolve
   const resolveConfig = {
@@ -92,15 +93,17 @@ module.exports = (mode, env, commandEntry) => {
       chunks: 'all',
       cacheGroups: {
         vendor: {
-          priority: 1,
-          chunks: 'initial',
           name: 'vendor',
+          chunks: 'initial',
+          priority: -10,
           test: /node_modules/,
-          minChunks: 1,
         },
         common: {
           name: 'common',
+          chunks: 'initial',
           minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },
