@@ -18,7 +18,6 @@ module.exports = (mode, env, commandEntry) => {
   const {
     entry: boboEntry,
     output: boboOutput = {},
-    cssModules = true,
     optimization: boboOptimization,
     externals,
     noParse,
@@ -56,7 +55,7 @@ module.exports = (mode, env, commandEntry) => {
       ? fnResolve(resolveConfig, mode, env)
       : resolveConfig;
 
-  const css = require('./css')(cssPreProcessor, cssModules, mode);
+  const css = require('./css')(cssPreProcessor, mode);
   const file = require('./js')(presetrc, mode);
   const assets = require('./assets')();
 

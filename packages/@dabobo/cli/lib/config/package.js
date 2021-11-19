@@ -13,26 +13,9 @@ module.exports = (root, answer, registry) => {
   pkg.name = appName;
   pkg.main = './src/' + entry;
 
-  if (buildingTool === BUILDINGTOOL.VUE) {
-    pkg.scripts = {
-      dev: 'vue-cli-service serve',
-      build: 'vue-cli-service build',
-    };
-  } else if (buildingTool === BUILDINGTOOL.UMI) {
-    pkg.scripts = {
-      dev: 'umi dev',
-      build: 'umi build',
-    };
-  } else if (buildingTool === BUILDINGTOOL.REACT) {
-    pkg.scripts = {
-      dev: 'react-scripts start',
-      build: 'react-scripts build',
-    };
-  } else {
-    pkg.scripts = {
-      dev: 'dabobo-cli-service dev',
-      build: 'dabobo-cli-service build',
-    };
+  if (buildingTool === BUILDINGTOOL.DABOBO) {
+    pkg.scripts.dev = 'dabobo-cli-service dev';
+    pkg.scripts.build = 'dabobo-cli-service build';
   }
 
   const { dependencies, devDependencies } = require('../dependencies')(

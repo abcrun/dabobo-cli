@@ -1,19 +1,3 @@
-function recurveRouter(children, router) {
-  const { path } = router;
-  const result = children.find((child) => path.indexOf(child.path) === 0);
-
-  if (result) {
-    result.children = result.children || [];
-    recurveRouter(result.children, router);
-  } else {
-    if (/\*$/.test(path)) {
-      children.push(router);
-    } else {
-      children.unshift(router);
-    }
-  }
-}
-
 export default function createRouterMap(context, exclude) {
   const map = {};
   const routers = [];
@@ -30,13 +14,26 @@ export default function createRouterMap(context, exclude) {
       component: module.default || (() => module),
     };
 
-    if (isIndex) {
-      path = path.replace(/\/index.*$/, '') || '/';
-      router.path = path;
-    }
+    if (isIndex || isLayout) {
+      const resolvePath = path.replace(/\/(?:index|__layout).*$/, '') || '/';
+      const route = map[resolvePath];
 
-    if (isLayout) {
-      path = path.replace(/\/__layout.*$/, '') || '/';
+      if (route) {
+        if (isIndex) {
+          // do nothing, use the default path
+        } else if (isLayout) {
+          // change the index path to `${path}/index`
+          const indexPath = resolvePath + '/index';
+          route.path = indexPath;
+          map[indexPath] = route;
+
+          // set the layout path
+          path = resolvePath;
+        }
+      } else {
+        path = resolvePath;
+      }
+
       router.path = path;
     }
 
@@ -46,7 +43,31 @@ export default function createRouterMap(context, exclude) {
   });
 
   Object.keys(map).forEach((key) => {
-    recurveRouter(routers, map[key]);
+    const paths = key.split('/');
+
+    let step = 0;
+    let path = '';
+    let children = routers;
+
+    while (step < paths.length) {
+      path = path === '/' ? '/' + paths[step] : path + ('/' + paths[step]);
+
+      const inMap = map[path];
+      const inRouters = children.find((router) => router.path === path);
+
+      if (inRouters) {
+        if (!inRouters.children) inRouters.children = [];
+        children = inRouters.children;
+      } else if (inMap) {
+        const copyInMap = { ...inMap };
+        copyInMap.children = [];
+        children.push(copyInMap);
+
+        children = copyInMap.children;
+      }
+
+      step++;
+    }
   });
 
   return routers;

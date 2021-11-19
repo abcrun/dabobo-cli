@@ -4,11 +4,11 @@
   "main": "",
   "private": true,
   "scripts": {
-    "start": "",
+    "dev": "",
     "build": "",
-    "lint": "eslint \"{,src/**/*}.{js,ts,jsx,tsx,vue}\"",
+    "lint": "eslint \"{,src/**/*}.{mjs,js,ts,jsx,tsx,vue}\"",
     "stylelint": "stylelint \"{,src/**/*}.{css,scss,less,styl,vue}\"",
-    "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,sass,scss,styl}\""
+    "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,scss,styl,vue}\""
   },
   "husky": {
     "hooks": {

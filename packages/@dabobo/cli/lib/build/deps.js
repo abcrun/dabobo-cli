@@ -34,7 +34,8 @@ module.exports = (preset, registry) => {
         tools.push(
           'vue-template-compiler:^2.6.14',
           'vue-loader:^15.9.8',
-          'vue-loader-plugin:^1.3.0'
+          'vue-loader-plugin:^1.3.0',
+          'css-loader:^6.2.0' // vue-loader@15.xx need css-loader for peerDependencies, otherwise the temimal will log warning, I hate the wanning message.
         );
       } else if (version === 3) {
         tools.push('@vue/compiler-sfc:^3.2.6', 'vue-loader:^16.0.0');

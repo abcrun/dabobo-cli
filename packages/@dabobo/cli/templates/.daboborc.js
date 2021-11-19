@@ -12,7 +12,6 @@ module.exports = (mode, env) => {
    *  {
    *    entry,
    *    output,
-   *    cssModules - for css-loader,
    *    optimization,
    *    noParse,
    *    resolve: (defaultResolve, mode, env) => webpack.resolve,
@@ -27,7 +26,6 @@ module.exports = (mode, env) => {
     output: {
       publicPath: '/',
     },
-    cssModules: false,
     devServer: {
       port: 8080,
     },
@@ -35,29 +33,36 @@ module.exports = (mode, env) => {
       return {
         ...defaultResolve,
         alias: {
-          '@': resolve('./src'),
+          '@': resolve(__dirname, './src'),
         },
       };
     },
     plugins: (defaultPlugins, mode, env) => {
-      return [
+      const plugins = [
         ...defaultPlugins,
-        new CopyPlugin({
-          patterns: [
-            {
-              from: resolve(__dirname, './public'),
-              to: resolve(__dirname, './dist'),
-              globOptions: {
-                ignore: ['.*', resolve(__dirname, './public/index.html')],
-              },
-            },
-          ],
-        }),
         new HtmlWebpackPlugin({
           template: resolve('./public/index.html'),
           filename: 'index.html',
         }),
       ];
+
+      if (mode === 'production') {
+        plugins.push(
+          new CopyPlugin({
+            patterns: [
+              {
+                from: resolve(__dirname, './public'),
+                to: resolve(__dirname, './dist'),
+                globOptions: {
+                  ignore: ['.*', resolve(__dirname, './public/index.html')],
+                },
+              },
+            ],
+          })
+        );
+      }
+
+      return plugins;
     },
   };
 };

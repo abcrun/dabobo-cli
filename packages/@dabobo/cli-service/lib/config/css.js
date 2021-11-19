@@ -1,7 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CSSPREPROCESSOR } = require('../constant');
 
-module.exports = (cssPreProcessor, modules, mode) => {
+module.exports = (cssPreProcessor, mode) => {
   const rules = [];
   const plugins = [];
 
@@ -10,10 +10,7 @@ module.exports = (cssPreProcessor, modules, mode) => {
       loader:
         mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
     },
-    {
-      loader: 'css-loader',
-      options: { modules },
-    },
+    'css-loader',
     'postcss-loader',
   ];
 

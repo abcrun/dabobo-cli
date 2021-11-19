@@ -1,14 +1,13 @@
 {
-  "name": "@dabobo/utils",
-  "version": "0.1.3",
-  "description": "dabobo utils",
+  "name": "@dabobo/templates",
+  "version": "0.1.0",
+  "description": "dabobo templates",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abcrun/dabobo-cli.git",
-    "directory": "packages/@dabobo/utils"
+    "directory": "packages/@dabobo/templates"
   },
   "main": "index.js",
-  "types": "types/index.d.ts",
   "author": "hrdesign@163.com",
   "license": "MIT",
   "publishConfig": {
