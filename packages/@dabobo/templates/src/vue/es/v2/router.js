@@ -15,7 +15,7 @@ routes.push({
 });
 routes.unshift({
   path: '/',
-  redirect: '/home',
+  redirect: '/home/index',
 });
 
 const router = new Router({

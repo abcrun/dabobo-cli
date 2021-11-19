@@ -41,7 +41,7 @@ module.exports = (root, answer, options) => {
   const building = require('./build')(root, answer);
 
   console.log();
-  console.log(chalk.bold('Initializing the necessary files...'));
+  console.log(chalk.bold('Initializing the necessary config files...'));
   Promise.all([
     ...template,
     presetrc,
@@ -50,6 +50,10 @@ module.exports = (root, answer, options) => {
     pkg,
     ...building,
   ]).then(() => {
+    // add templates
+    console.log();
+    require('@dabobo/templates')(answer);
+
     const packageManager = getPackageManager(options);
     install(packageManager, registry);
   });
