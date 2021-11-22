@@ -20,7 +20,7 @@ module.exports = (options) => {
     ).start();
 
     fs.copySync(dest, to);
-    spinner.succeed(chalk.bold(`Created the nessary templates`));
+    spinner.succeed(chalk.bold(`Created the necessary templates`));
   } else {
     // something else
   }
