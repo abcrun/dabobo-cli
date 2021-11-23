@@ -1,6 +1,6 @@
 {
   "name": "@dabobo/cli",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A Front-End Engineering Scaffold For Lint and Building",
   "bin": {
     "dabobo": "bin/index.js"
@@ -42,7 +42,7 @@
     "mem-fs-editor": "^9.1.0",
     "ora": "^5.4.1",
     "semver": "^7.3.2",
-    "@dabobo/templates": "^0.1.0",
+    "@dabobo/templates": "^0.1.2",
     "validate-npm-package-name": "^3.0.0"
   },
   "engines": {

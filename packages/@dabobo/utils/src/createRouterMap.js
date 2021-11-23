@@ -11,11 +11,12 @@ export default function createRouterMap(context, exclude) {
 
     const router = {
       path,
+      name: path.replace(/\//g, '_').replace(/^_+/g, '').replace(/_+/g, '_'),
       component: module.default || (() => module),
     };
 
     if (isIndex || isLayout) {
-      const resolvePath = path.replace(/\/(?:index|__layout).*$/, '') || '/';
+      const resolvePath = path.replace(/\/(?:index|__layout)$/i, '') || '/';
       const route = map[resolvePath];
 
       if (route) {
@@ -43,7 +44,7 @@ export default function createRouterMap(context, exclude) {
   });
 
   Object.keys(map).forEach((key) => {
-    const paths = key.split('/');
+    const paths = key === '/' ? [''] : key.split('/');
 
     let step = 0;
     let path = '';
@@ -56,12 +57,21 @@ export default function createRouterMap(context, exclude) {
       const inRouters = children.find((router) => router.path === path);
 
       if (inRouters) {
-        if (!inRouters.children) inRouters.children = [];
         children = inRouters.children;
       } else if (inMap) {
         const copyInMap = { ...inMap };
         copyInMap.children = [];
         children.push(copyInMap);
+
+        // If the path '/home' is not the layout, we want to visit '/home/index' same as '/home'
+        const { path, name } = inMap;
+        const isIndex = /index$/i;
+        if (isIndex.test(name) && !isIndex.test(path)) {
+          children.push({
+            ...inMap,
+            path: path + '/index',
+          });
+        }
 
         children = copyInMap.children;
       }

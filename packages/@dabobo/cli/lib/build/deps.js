@@ -19,7 +19,7 @@ module.exports = (preset, registry) => {
   ];
 
   if (buildingTool === BUILDINGTOOL.DABOBO) {
-    tools.push('@dabobo/cli-service:^0.2.0');
+    tools.push('@dabobo/cli-service:^0.2.2');
 
     if (cssPreProcessor === CSSPREPROCESSOR.LESS) {
       tools.push('less-loader:^10.0.1', 'less:^4.0.0');

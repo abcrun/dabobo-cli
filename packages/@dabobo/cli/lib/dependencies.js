@@ -31,7 +31,7 @@ const getLibrary = (preset) => {
       libs.push('react-router: ^5.2.1');
     }
 
-    libs.push('@dabobo/utils:^0.1.0');
+    libs.push('@dabobo/utils:^0.1.3');
   }
 
   return libs;

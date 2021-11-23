@@ -74,7 +74,7 @@ module.exports = (mode, env, commandEntry) => {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
-        VARS: JSON.stringify(envs[env]),
+        NODE_DATA: JSON.stringify(envs[env]),
       },
     }),
     ...css.plugins,

@@ -2,7 +2,7 @@
   <div class="main-layout">
     <div class="main-title">
       Main Layout
-      <span>Current ENV VARS IN .env -> {{env.domain}}</span>
+      <span>Current ENV DATA IN .env: {{env.domain}}</span>
     </div>
     <div class="content">
       <div class="top">
@@ -22,7 +22,7 @@ export default {
   name: 'MainLayout',
   computed: {
     env() {
-      return process.env.VARS;
+      return process.env.NODE_DATA
     },
   },
 };
