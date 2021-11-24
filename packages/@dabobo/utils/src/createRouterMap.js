@@ -11,7 +11,7 @@ export default function createRouterMap(context, exclude) {
 
     const router = {
       path,
-      name: path.replace(/\//g, '_').replace(/^_+/g, '').replace(/_+/g, '_'),
+      uri: path.replace(/\//g, '_').replace(/^_+/g, '').replace(/_+/g, '_'),
       component: module.default || (() => module),
     };
 
@@ -64,9 +64,9 @@ export default function createRouterMap(context, exclude) {
         children.push(copyInMap);
 
         // If the path '/home' is not the layout, we want to visit '/home/index' same as '/home'
-        const { path, name } = inMap;
+        const { path, uri } = inMap;
         const isIndex = /index$/i;
-        if (isIndex.test(name) && !isIndex.test(path)) {
+        if (isIndex.test(uri) && !isIndex.test(path)) {
           children.push({
             ...inMap,
             path: path + '/index',
