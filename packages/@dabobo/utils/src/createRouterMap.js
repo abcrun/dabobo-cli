@@ -1,9 +1,8 @@
 export default function createRouterMap(context, exclude) {
-  const map = {};
   const routers = [];
   const reg = exclude || /\/components?\//i;
 
-  context.keys().forEach((key) => {
+  const map = context.keys().reduce((map, key) => {
     let path = key.substring(1).replace(/\.[^/.]*$/, '');
     const isIndex = /index$/i.test(path);
     const isLayout = /__layout$/i.test(path);
@@ -41,7 +40,9 @@ export default function createRouterMap(context, exclude) {
     if (!reg.test(path)) {
       map[path] = router;
     }
-  });
+
+    return map;
+  }, {});
 
   Object.keys(map).forEach((key) => {
     const paths = key === '/' ? [''] : key.split('/');
