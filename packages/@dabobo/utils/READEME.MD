@@ -4,7 +4,7 @@
 
 ### Useage
 
-```
+```javascript
 /* declare module 'utils' { */
 /*   export function createRouterMap(context: typeof require.context, exclude?: RegExp) = /\/components?\// : Array<router>; */
 
