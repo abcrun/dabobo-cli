@@ -56,5 +56,12 @@ module.exports = (root, answer, options) => {
 
     const packageManager = getPackageManager(options);
     install(packageManager, registry);
+
+    console.log();
+    console.log(
+      chalk.bold.green(
+        'To enable husky hook for git, please run "npm run huskhook" in your project'
+      )
+    );
   });
 };

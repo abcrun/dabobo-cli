@@ -6,20 +6,15 @@
   "scripts": {
     "dev": "",
     "build": "",
+    "huskyhook": "husky install",
     "lint": "eslint \"{,src/**/*}.{mjs,js,ts,jsx,tsx,vue}\"",
     "stylelint": "stylelint \"{,src/**/*}.{css,scss,less,styl,vue}\"",
     "prettier": "prettier --write \"{,src/**/*}.{js,ts,jsx,tsx,json,css,less,scss,styl,vue}\""
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
       "prettier --write",
-      "eslint",
+      "eslint --fix",
       "git add"
     ],
     "*.{css,less,sass,scss}": [

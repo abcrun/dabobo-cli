@@ -6,6 +6,8 @@ module.exports = (root, answer) => {
   const { language, buildingTool } = answer;
   const files = [
     './public/index.html',
+    './.husky/pre-commit',
+    './.husky/commit-msg',
     '.eslintignore',
     '.prettierrc',
     '.prettierignore',

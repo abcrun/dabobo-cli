@@ -1,6 +1,6 @@
 {
   "name": "@dabobo/cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A Front-End Engineering Scaffold For Lint and Building",
   "bin": {
     "dabobo": "bin/index.js"

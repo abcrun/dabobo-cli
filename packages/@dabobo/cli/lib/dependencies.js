@@ -44,7 +44,7 @@ module.exports = (preset, registry) => {
   const stylelint = require('./stylelint/deps')(preset, registry);
   const building = require('./build/deps')(preset, registry);
 
-  const preCommit = ['husky', 'lint-staged'];
+  const preCommit = ['husky:^7.0.4', 'lint-staged:^12.3.7'];
   const types =
     language === LANGUAGE.TYPESCRIPT
       ? [

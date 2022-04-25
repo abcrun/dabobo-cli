@@ -64,6 +64,8 @@ module.exports = (root, preset) => {
     },
     rules: {
       'prettier/prettier': 'warn',
+      'import/extensions': 'off',
+      'import/no-unresolved': 'off',
     },
   };
 
