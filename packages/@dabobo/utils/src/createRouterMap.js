@@ -1,10 +1,12 @@
 export default function createRouterMap(context, exclude) {
-  const routers = [];
+  const routes = [];
   const reg = exclude || /\/components?\//i;
 
   const map = context.keys().reduce((map, key) => {
-    let path = key.substring(1).replace(/\.[^/.]*$/, '');
-    const isIndex = /index$/i.test(path);
+    const path = key
+      .substring(1)
+      .replace(/\/\$/g, '/:')
+      .replace(/\.[^/.]*$/, '');
     const isLayout = /__layout$/i.test(path);
     const module = context(key);
 
@@ -14,31 +16,14 @@ export default function createRouterMap(context, exclude) {
       component: module.default || (() => module),
     };
 
-    if (isIndex || isLayout) {
-      const resolvePath = path.replace(/\/(?:index|__layout)$/i, '') || '/';
-      const route = map[resolvePath];
-
-      if (route) {
-        if (isIndex) {
-          // do nothing, use the default path
-        } else if (isLayout) {
-          // change the index path to `${path}/index`
-          const indexPath = resolvePath + '/index';
-          route.path = indexPath;
-          map[indexPath] = route;
-
-          // set the layout path
-          path = resolvePath;
-        }
-      } else {
-        path = resolvePath;
-      }
-
-      router.path = path;
-    }
+    // __layout作为其所在path的组件
+    const resolvePath = isLayout
+      ? path.replace(/\/__layout$/i, '') || '/'
+      : path;
 
     if (!reg.test(path)) {
-      map[path] = router;
+      router.path = resolvePath;
+      map[resolvePath] = router;
     }
 
     return map;
@@ -49,37 +34,46 @@ export default function createRouterMap(context, exclude) {
 
     let step = 0;
     let path = '';
-    let children = routers;
+    let children = routes;
 
     while (step < paths.length) {
       path = path === '/' ? '/' + paths[step] : path + ('/' + paths[step]);
 
+      const index = path + '/index';
+      const hasIndex = map[index];
       const inMap = map[path];
-      const inRouters = children.find((router) => router.path === path);
+      const inRoutes = children.find((route) => route.path === path);
 
-      if (inRouters) {
-        children = inRouters.children;
-      } else if (inMap) {
-        const copyInMap = { ...inMap };
-        copyInMap.children = [];
-        children.push(copyInMap);
+      // 如果/home/__layout.xx和/home/index.xx同时存在
+      // 我们访问/home时，自动redirect到/home/index
+      // 同时/home的component必须是/home/__layout
+      if (inMap) {
+        let current;
 
-        // If the path '/home' is not the layout, we want to visit '/home/index' same as '/home'
-        const { path, uri } = inMap;
-        const isIndex = /index$/i;
-        if (isIndex.test(uri) && !isIndex.test(path)) {
-          children.push({
-            ...inMap,
-            path: path + '/index',
-          });
+        if (inRoutes) {
+          current = inRoutes;
+        } else {
+          current = { ...inMap };
+          current.children = [];
+          children.push(current);
         }
 
-        children = copyInMap.children;
+        if (hasIndex) current.redirect = index;
+
+        children = current.children;
+      } else if (hasIndex) {
+        // 如果只有/home/index.xx没有/home/__layout.xx
+        // 此时map中并不存在map['/home'],但存在map['/home/index']
+        // 此时如果访问/home时，自动索引指向这个index文件
+        children.push({
+          path,
+          component: hasIndex.component,
+        });
       }
 
       step++;
     }
   });
 
-  return routers;
+  return { routes, map };
 }
