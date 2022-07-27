@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { createRouterMap } from '@dabobo/utils';
 
-const routes = createRouterMap(
+const { routes } = createRouterMap(
   require.context('./views', true, /\.vue/, 'lazy'),
   /\/404\.vue/
 );

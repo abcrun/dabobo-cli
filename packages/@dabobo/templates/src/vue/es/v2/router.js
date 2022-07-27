@@ -4,7 +4,7 @@ import { createRouterMap } from '@dabobo/utils';
 
 Vue.use(Router);
 
-const routes = createRouterMap(
+const { routes } = createRouterMap(
   require.context('./views', true, /\.vue/, 'lazy'),
   /\/404\.vue/
 );
