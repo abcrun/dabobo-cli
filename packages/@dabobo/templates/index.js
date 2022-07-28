@@ -7,12 +7,14 @@ module.exports = (options) => {
   let { language, library, version } = options;
   if (language === 'es6+') language = 'es';
 
+  fs.ensureDirSync(path.resolve('./src'));
+
   const dest = path.resolve(
     __dirname,
     `src/${library}/${language}/v${version}`
   );
   const exist = fs.pathExistsSync(dest);
-  const to = fs.ensureDirSync(path.resolve('./src'));
+  const to = path.resolve('./src');
 
   if (exist) {
     const spinner = ora(
